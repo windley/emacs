@@ -730,5 +730,45 @@ This function is meant to be added to 'flyspell-incorrect-hook'." nil [97456 984
     that cannot be seen, because it is somewhere off the screen." nil [99345 99927]) ("ad-activate" code nil [99929 99979]) ("flyspell" package nil nil nil [99981 100000]))
     :unmatched-syntax 'nil
     )
+   (semanticdb-table "krl.el"
+    :file "krl.el"
+    :pointmax 2444
+    :major-mode 'emacs-lisp-mode
+    :tokens '(("krl-mode" package nil nil nil [3 22]) ("krl-comment-dwim" function nil ("arg") ((user-visible . t)) "Comment or uncomment current line or region in a smart way. For detail, see `comment-dwim'." nil [65 331]) ("krl-keywords" variable nil nil nil "KRL keywords." nil [369 412]) ("setq" code nil [414 663]) ("krl-types" variable nil nil nil "KRL types." nil [665 702]) ("krl-constants" variable nil nil nil "KRL constants." nil [704 749]) ("setq" code nil [751 815]) ("krl-events" variable nil nil nil "KRL events." nil [817 856]) ("krl-functions" variable nil nil nil "KRL functions." nil [858 903]) ("setq" code nil [905 1006]) ("krl-keywords-regexp" variable nil (regexp-opt krl-keywords (quote words)) nil nil nil [1063 1124]) ("krl-type-regexp" variable nil (regexp-opt krl-types (quote words)) nil nil nil [1125 1179]) ("krl-constant-regexp" variable nil (regexp-opt krl-constants (quote words)) nil nil nil [1180 1242]) ("krl-event-regexp" variable nil (regexp-opt krl-events (quote words)) nil nil nil [1243 1299]) ("krl-functions-regexp" variable nil (regexp-opt krl-functions (quote words)) nil nil nil [1300 1363]) ("setq" code nil [1451 1856]) ("define-derived-mode" code nil [1877 2440]))
+    )
+   (semanticdb-table "dot.emacs"
+    :file "dot.emacs"
+    :pointmax 2272
+    :major-mode 'emacs-lisp-mode
+    :tokens '(("emacs-root" variable nil "~/" nil "My home directory --- the root of my personal emacs load-path." nil [83 174]) ("add-to-list" code nil [176 229]) ("add-to-list" code nil [230 282]) ("labels" code nil [347 766]) ("aquamacs-p" variable nil (string-match "Aquamacs" (version)) nil nil nil [768 823]) ("load-library" code nil [825 847]) ("load-library" code nil [866 889]) ("load-library" code nil [922 947]) ("if" code nil [966 1007]) ("load-library" code nil [1033 1059]) ("color-theme" include nil nil nil [1079 1101]) ("eval-after-load" code nil [1102 1260]))
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "efuncs.el"
+    :file "efuncs.el"
+    :pointmax 2985
+    :major-mode 'emacs-lisp-mode
+    :tokens '(("global-unset-key" code nil [44 130]) ("global-set-key" code nil [132 170]) ("global-set-key" code nil [171 207]) ("global-set-key" code nil [208 274]) ("insert-date" function nil nil ((user-visible . t)) "Insert date at point." nil [305 426]) ("fset" code nil [488 697]) ("mark-buffer-and-copy" function nil nil ((user-visible . t)) "Mark the entire buffer and put it in the kill ring" nil [896 1043]) ("global-set-key" code nil [1045 1091]) ("count-words-region" function nil ("beginning" "end") ((user-visible . t)) "Print number of words in the region." nil [1137 1755]) ("count-words-buffer" function nil nil ((user-visible . t)) "Count all the words in the buffer" nil [1799 1931]) ("global-set-key" code nil [1977 2025]) ("rename-file-and-buffer" function nil nil ((user-visible . t)) "Renames current buffer and file it is visiting." nil [2120 2779]) ("global-set-key" code nil [2781 2835]) ("global-set-key" code nil [2837 2879]))
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "blogging.el"
+    :file "blogging.el"
+    :pointmax 2145
+    :major-mode 'emacs-lisp-mode
+    :tokens 'nil
+    )
+   (semanticdb-table "my-config.el"
+    :file "my-config.el"
+    :pointmax 937
+    :major-mode 'emacs-lisp-mode
+    :tokens '(("setq" code nil [31 58]) ("transient-mark-mode" code nil [79 102]) ("tool-bar-mode" code nil [127 146]) ("server-start" code nil [187 201]) ("setq" code nil [252 285]) ("display-time" code nil [297 311]) ("setq" code nil [317 338]) ("setq" code nil [415 455]) ("setq" code nil [456 487]) ("setq" code nil [520 540]) ("setq" code nil [553 603]) ("setq" code nil [605 673]) ("setq" code nil [675 705]) ("setq" code nil [709 743]) ("setq" code nil [781 840]) ("global-set-key" code nil [841 876]) ("smooth-scrolling" include nil nil nil [878 905]) ("setq" code nil [906 935]))
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "modes.el"
+    :file "modes.el"
+    :pointmax 4276
+    :major-mode 'emacs-lisp-mode
+    :tokens '(("setq-default" code nil [47 76]) ("setq" code nil [77 113]) ("setq" code nil [114 248]) ("setq" code nil [259 391]) ("setq" code nil [393 527]) ("add-to-list" code nil [567 621]) ("define-key" code nil [622 669]) ("define-key" code nil [670 713]) ("setq" code nil [714 735]) ("add-hook" code nil [736 820]) ("html-mode" function nil nil ((use-visible . t) (prototype . t)) "Yay SGML" nil [832 878]) ("add-to-list" code nil [879 934]) ("add-to-list" code nil [935 991]) ("add-to-list" code nil [992 1046]) ("add-to-list" code nil [1047 1102]) ("setq" code nil [1103 1241]) ("yaml-mode" include nil nil nil [1252 1272]) ("add-to-list" code nil [1273 1328]) ("add-hook" code nil [1329 1433]) ("js2-mode" function nil nil ((use-visible . t) (prototype . t)) nil nil [1573 1605]) ("add-to-list" code nil [1606 1658]) ("add-to-list" code nil [1668 1721]) ("puppet-mode" function nil nil ((use-visible . t) (prototype . t)) "Puppet mode" nil [1734 1787]) ("add-to-list" code nil [1788 1843]) ("wikipedia-mode" function nil nil ((use-visible . t) (prototype . t)) "Major mode for editing documents in Wikipedia markup." nil [1859 1963]) ("add-to-list" code nil [1964 2027]) ("add-to-list" code nil [2028 2110]) ("wikipedia-mode" function nil nil ((prototype . t)) nil nil [2123 2161]) ("setq" code nil [2179 2218]) ("setq" code nil [2219 2424]) ("setq" code nil [2425 2509]) ("ruby-mode" function nil nil ((use-visible . t) (prototype . t)) "Ruby editing mode." nil [2527 2583]) ("add-to-list" code nil [2584 2637]) ("add-to-list" code nil [2638 2697]) ("add-hook" code nil [2757 2802]) ("add-hook" code nil [2803 2849]) ("run-ruby" function nil nil ((prototype . t)) "Run an inferior Ruby process" nil [2851 2915]) ("inf-ruby-keys" function nil nil ((prototype . t)) "Set local key defs for inf-ruby in ruby-mode" nil [2916 3001]) ("add-hook" code nil [3002 3114]) ("rails" include nil nil nil [3120 3136]) ("ruby-electric" include nil nil nil [3137 3161]) ("speedbar-frame-mode" function nil nil ((use-visible . t) (prototype . t)) "Popup a speedbar frame" nil [3180 3249]) ("speedbar-get-focus" function nil nil ((use-visible . t) (prototype . t)) "Jump to speedbar frame" nil [3250 3318]) ("add-hook" code nil [3349 3412]) ("add-hook" code nil [3440 3497]) ("setq" code nil [3512 3553]) ("semantic-load" include nil nil nil [3554 3578]) ("ecb" include nil nil nil [3588 3602]) ("ido" include nil nil nil [3612 3626]) ("ido-mode" code nil [3627 3639]) ("setq" code nil [3640 3673]) ("setq" code nil [3755 3795]) ("setq" code nil [3839 3892]) ("flyspell-mode" function nil nil ((use-visible . t) (prototype . t)) "On-the-fly spelling checker." nil [3907 3976]) ("predictive" include nil nil nil [4051 4072]) ("predictive-html" include nil nil nil [4073 4099]))
+    :unmatched-syntax 'nil
+    )
    )
   )
