@@ -1,0 +1,14 @@
+;; Object semantic.cache
+;; SEMANTICDB Tags save file
+(semanticdb-project-database "semantic.cache"
+  :file "semantic.cache"
+  :tables (list 
+   (semanticdb-table "color-theme-dark-vee.el"
+    :file "color-theme-dark-vee.el"
+    :pointmax 10890
+    :major-mode 'emacs-lisp-mode
+    :tokens '(("color-theme-dark-vee" function nil nil ((user-visible . t)) "Color theme by vic, created 2006-05-05." nil [1 10888]))
+    :unmatched-syntax 'nil
+    )
+   )
+  )
