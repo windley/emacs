@@ -89,3 +89,17 @@
    (interactive "r") 
    (shell-command-on-region beg end "fmt -w2000" nil t))
 
+
+(defun entify-region (beginning end)
+  "Turn < and > into respective entities"
+  (interactive "r")
+  (save-excursion
+    (narrow-to-region beginning end)
+    (beginning-of-buffer)
+    (replace-string "<" "&lt;")
+    (beginning-of-buffer)
+    (replace-string ">" "&gt;")
+    (widen)
+    )
+  )
+

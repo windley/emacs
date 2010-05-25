@@ -27,11 +27,11 @@
 
 (defvar aquamacs-p (string-match "Aquamacs" (version)))
 
-(load-library "modes") ;; blogging stuff
-(load-library "efuncs") ;; my functions and keybindings
-(load-library "blogging") ;; blogging stuff
+(load-library "modes")                    ;; blogging stuff
+(load-library "efuncs")                   ;; my functions and keybindings
+(load-library "blogging")                 ;; blogging stuff
 (if aquamacs-p (load-library "aquamacs")) ;; specific to Aquaemacs
-(load-library "my-config") ;; blogging stuff
+(load-library "my-config")                ;; blogging stuff
 
 (require 'color-theme)
 (eval-after-load "color-theme"
