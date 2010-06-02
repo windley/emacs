@@ -5,7 +5,6 @@
 (setq default-major-mode 'text-mode)
 (setq text-mode-hook
    '(lambda () 
-      ;;(auto-fill-mode 1)
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode)))
@@ -14,14 +13,12 @@
 ;;; tex
 (setq tex-mode-hook
    '(lambda () 
-;      (auto-fill-mode 1)
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode)))
 
 (setq latex-mode-hook
    '(lambda () 
-;      (auto-fill-mode 1)
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode)))
@@ -34,8 +31,8 @@
 (setq org-log-done t)
 (add-hook 'org-mode-hook 
 	  (lambda ()
-	  'turn-on-font-lock
-	  (flyspell-mode 1)))
+	    'turn-on-font-lock
+	    (flyspell-mode 1)))
 
 
 ;;; HTML
