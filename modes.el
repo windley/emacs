@@ -1,5 +1,8 @@
 ;; my major mode configs
 
+(setq ispell-program-name "/usr/local/bin/ispell") ;; has to be set before load.
+(require 'ispell)
+
 ;;set up major mode
 (setq-default fill-column 69)
 (setq default-major-mode 'text-mode)
