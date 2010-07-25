@@ -10,8 +10,8 @@
 
 ;; add all the elisp directories under ~/emacs to my load path
 (labels ((add-path (p)
-	 (add-to-list 'load-path
-			(concat emacs-root p))))
+		   (add-to-list 'load-path
+				(concat emacs-root p))))
   (add-path "emacs/speedbar-0.14beta4")
   (add-path "emacs/eieio-0.17")
   (add-path "emacs/semantic-1.4.4")
