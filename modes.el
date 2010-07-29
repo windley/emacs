@@ -129,6 +129,10 @@
 
 
 
+;;; cperl-mode is preferred to perl-mode
+(defalias 'perl-mode 'cperl-mode)
+(setq cperl-electric-keywords t)
+(setq cperl-invalid-face (quote off)) ;; don't highlight trailing whitespace
 
 ;;; speedbar
 (autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
