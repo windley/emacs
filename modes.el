@@ -5,7 +5,9 @@
 
 ;;set up major mode
 (setq-default fill-column 69)
-(setq default-major-mode 'text-mode)
+(setq default-major-mode 'org-mode)
+
+
 (setq text-mode-hook
    '(lambda () 
       (setq word-wrap 1)
