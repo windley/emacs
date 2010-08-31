@@ -14,6 +14,25 @@
       (abbrev-mode t)
       (flyspell-mode)))
 
+(setq ispell-program-name "/usr/local/bin/ispell") ;; has to be set before load.
+(if (file-exists-p "/usr/local/bin/ispell") 
+    (require 'ispell)
+)
+
+(if (file-exists-p "/usr/local/bin/ispell") 
+    ;;; flyspell
+    (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;   (add-to-list 'flyspell-prog-text-faces "nxml-text-face")
+)
+
+  ;;set up major mode
+  (setq-default fill-column 69)
+  (setq default-major-mode 'text-mode)
+  (setq text-mode-hook
+	'(lambda () 
+	   (setq word-wrap 1)
+	   (abbrev-mode t)
+	   (flyspell-mode)))
 
 ;;; tex
 (setq tex-mode-hook
@@ -123,6 +142,10 @@
 
 
 
+;;; cperl-mode is preferred to perl-mode
+(defalias 'perl-mode 'cperl-mode)
+(setq cperl-electric-keywords t)
+(setq cperl-invalid-face (quote off)) ;; don't highlight trailing whitespace
 
 ;;; speedbar
 (autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
@@ -149,10 +172,6 @@
 (setq ido-slow-ftp-host-regexps '(".*"))
 ;; don't search files in other directories
 (setq ido-work-directory-list-ignore-regexps '(".*"))
-
-;;; flyspell
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-;(add-to-list 'flyspell-prog-text-faces "nxml-text-face")
 
 ;;; predictive
 (require 'predictive)
