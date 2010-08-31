@@ -5,26 +5,35 @@
 
 ;;set up major mode
 (setq-default fill-column 69)
-(setq default-major-mode 'text-mode)
+(setq default-major-mode 'org-mode)
+
+
 (setq text-mode-hook
    '(lambda () 
-      ;;(auto-fill-mode 1)
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode)))
 
+(setq ispell-program-name "/usr/local/bin/ispell") ;; has to be set before load.
+(if (file-exists-p "/usr/local/bin/ispell") 
+    (require 'ispell)
+)
+
+(if (file-exists-p "/usr/local/bin/ispell") 
+    ;;; flyspell
+    (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;   (add-to-list 'flyspell-prog-text-faces "nxml-text-face")
+)
 
 ;;; tex
 (setq tex-mode-hook
    '(lambda () 
-;      (auto-fill-mode 1)
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode)))
 
 (setq latex-mode-hook
    '(lambda () 
-;      (auto-fill-mode 1)
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode)))
@@ -37,8 +46,23 @@
 (setq org-log-done t)
 (add-hook 'org-mode-hook 
 	  (lambda ()
-	  'turn-on-font-lock
-	  (flyspell-mode 1)))
+	    'turn-on-font-lock
+	    (setq word-wrap 1)
+	    (flyspell-mode 1)))
+
+(require 'remember)
+(org-remember-insinuate)
+
+(setq org-directory "/Volumes/iDisk/Documents/orgfiles/")
+(setq org-default-notes-file "/Volumes/iDisk/Documents/orgfiles/notes.org")
+(add-hook 'remember-mode-hook 'org-remember-apply-template)
+(define-key global-map "\C-cr" 'org-remember)
+
+(setq org-remember-templates
+      `(("Journal" ?j "\n* %^{day's theme} %T \n%[~/emacs/templates/dailyreview.txt]%i\n" ,(concat org-directory "journal.org"))
+	("Book" ?b "\n* %^{Book Title} %T :BOOK: \n%[~/emacs/templates/booktemp.txt]%?\n" ,(concat org-directory "book.org"))
+	("Notes" ?n "\n* %^{topic} %T \n%i%?\n" ,(concat org-directory "notes.org"))
+	))
 
 
 ;;; HTML
@@ -124,6 +148,10 @@
 
 
 
+;;; cperl-mode is preferred to perl-mode
+(defalias 'perl-mode 'cperl-mode)
+(setq cperl-electric-keywords t)
+(setq cperl-invalid-face (quote off)) ;; don't highlight trailing whitespace
 
 ;;; speedbar
 (autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
@@ -150,10 +178,6 @@
 (setq ido-slow-ftp-host-regexps '(".*"))
 ;; don't search files in other directories
 (setq ido-work-directory-list-ignore-regexps '(".*"))
-
-;;; flyspell
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-;(add-to-list 'flyspell-prog-text-faces "nxml-text-face")
 
 ;;; predictive
 (require 'predictive)
