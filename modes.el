@@ -25,15 +25,6 @@
 ;   (add-to-list 'flyspell-prog-text-faces "nxml-text-face")
 )
 
-  ;;set up major mode
-  (setq-default fill-column 69)
-  (setq default-major-mode 'text-mode)
-  (setq text-mode-hook
-	'(lambda () 
-	   (setq word-wrap 1)
-	   (abbrev-mode t)
-	   (flyspell-mode)))
-
 ;;; tex
 (setq tex-mode-hook
    '(lambda () 
@@ -56,7 +47,22 @@
 (add-hook 'org-mode-hook 
 	  (lambda ()
 	    'turn-on-font-lock
+	    (setq word-wrap 1)
 	    (flyspell-mode 1)))
+
+(require 'remember)
+(org-remember-insinuate)
+
+(setq org-directory "/Volumes/iDisk/Documents/orgfiles/")
+(setq org-default-notes-file "/Volumes/iDisk/Documents/orgfiles/notes.org")
+(add-hook 'remember-mode-hook 'org-remember-apply-template)
+(define-key global-map "\C-cr" 'org-remember)
+
+(setq org-remember-templates
+      `(("Journal" ?j "\n* %^{day's theme} %T \n%[~/emacs/templates/dailyreview.txt]%i\n" ,(concat org-directory "journal.org"))
+	("Book" ?b "\n* %^{Book Title} %T :BOOK: \n%[~/emacs/templates/booktemp.txt]%?\n" ,(concat org-directory "book.org"))
+	("Notes" ?n "\n* %^{topic} %T \n%i%?\n" ,(concat org-directory "notes.org"))
+	))
 
 
 ;;; HTML

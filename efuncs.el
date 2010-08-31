@@ -81,7 +81,7 @@
                (set-visited-file-name new-name)
                (set-buffer-modified-p nil)))))))
 
-(global-set-key (kbd "C-c r") 'rename-file-and-buffer)
+;(global-set-key (kbd "C-c r") 'rename-file-and-buffer)
 
 (global-set-key "\C-x\C-i" 'indent-region)
 
