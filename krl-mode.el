@@ -18,7 +18,7 @@
       '("ruleset" "meta" "dispatch" "global"
 	"rule" "is" "select" "when" "using" "setting" "foreach" "pre" "if" "then" "every" "choose" 
 	"callbacks" "success" "failure" "fires" "always"
-	"function" "datasource" "dataset" 
+	"function" "datasource" "dataset" "="
 	))
 
 (defvar krl-types nil
