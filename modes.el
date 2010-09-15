@@ -53,8 +53,8 @@
 (require 'remember)
 (org-remember-insinuate)
 
-(setq org-directory "/Volumes/iDisk/Documents/orgfiles/")
-(setq org-default-notes-file "/Volumes/iDisk/Documents/orgfiles/notes.org")
+(setq org-directory "~/Dropbox/Documents/orgfiles/")
+(setq org-default-notes-file (concat org-directory "notes.org"))
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
 (define-key global-map "\C-cr" 'org-remember)
 
@@ -62,6 +62,7 @@
       `(("Journal" ?j "\n* %^{day's theme} %T \n%[~/emacs/templates/dailyreview.txt]%i\n" ,(concat org-directory "journal.org"))
 	("Book" ?b "\n* %^{Book Title} %T :BOOK: \n%[~/emacs/templates/booktemp.txt]%?\n" ,(concat org-directory "book.org"))
 	("Notes" ?n "\n* %^{topic} %T \n%i%?\n" ,(concat org-directory "notes.org"))
+	("Fax" ?f "\n* From: Phil Windley\n* Date: %T\n* To: %^{addresses} \n%i%?\n" ,(concat org-directory "faxes.org"))
 	))
 
 
