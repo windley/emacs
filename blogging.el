@@ -7,7 +7,6 @@
 	 v2 nil
 	 v3 "newsletter")
   "<!-- title: \n"   (or v1 (setq v1 (skeleton-read "Title: "))) "\n-->\n"
-  "<!-- category: newsletter -->\n"
   "<!-- keywords: \n"   (or v2 (setq v2 (skeleton-read "keywords: "))) "\n-->\n"
   "<p>" \n _  \n "</p>")
 
@@ -18,7 +17,7 @@
 	    (number-to-string (random 100))
             ".html"))
 
-(setq *blog-dir* "~/Documents/blogging/")
+(setq *blog-dir* "~/Dropbox/Documents/blogging/")
 
 (defun blog (name)
    "start blogging!"
