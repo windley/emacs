@@ -1504,6 +1504,14 @@ Can be used as a value for `html-mode-hook'."
   "<a href=\"http://www.amazon.com/exec/obidos/ASIN/" str "/windleyofente-20\"><img src=\"http://images.amazon.com/images/P/" str ".01.MZZZZZZZ.jpg\" border=\"0\" align=\"right\" hspace=\"5\" vspace=\"5\" /></a>"
   )
 
+
+(define-skeleton mp3-player
+  "HTML image tag for an Amazon book"
+  "MP3 URL: "
+  '(setq input "")
+  "<embed type=\"application/x-shockwave-flash\" flashvars=\"audioUrl=" str "\" src=\"http://www.google.com/reader/ui/3523697345-audio-player.swf\" width=\"400\" height=\"27\" quality=\"best\"></embed>"
+  )
+
 (define-skeleton amazon-link
   "HTML anchor for an Amazon book"
   "ASIN: "
