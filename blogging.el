@@ -1,5 +1,7 @@
 ;;; blogging stuff
 
+(require 'weblogger)
+
 (define-skeleton blogging-skeleton
   "inserts a blog skeleton into the current buffer"
   nil
