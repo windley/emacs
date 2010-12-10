@@ -22,7 +22,7 @@
   (add-path "emacs/predictive/html")
   (add-path "emacs/slime-1.2.1")
   (add-path "emacs/color-theme-6.6.0")
-  (add-path "emacs/org-6.32b")
+  (add-path "emacs/org-7.4/lisp")
   (add-path "emacs/git")
 )
 
