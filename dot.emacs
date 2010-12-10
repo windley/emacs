@@ -24,6 +24,7 @@
   (add-path "emacs/color-theme-6.6.0")
   (add-path "emacs/org-7.4/lisp")
   (add-path "emacs/git")
+  (add-path "emacs/weblogger")
 )
 
 (defvar aquamacs-p (string-match "Aquamacs" (version)))

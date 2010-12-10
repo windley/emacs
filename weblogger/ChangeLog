@@ -1,0 +1,288 @@
+2010-01-11  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el (weblogger-submit-bug-report):
+	* xml-rpc.el (xml-rpc-submit-bug-report): Update reported
+	information with the output of timezone-parse-date.
+
+	* weblogger.el, xml-rpc.el: Fix warnings that pop up in Emacs23
+	(Thanks, Leo!).  Update license to GPLv3.  Add ELPA installation
+	instructions.  Include explicit eval-when-compile dependency on
+	‘cl.
+
+2009-12-07  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el (weblogger-submit-bug-report):
+	* xml-rpc.el (xml-rpc-submit-bug-report):
+	New bug reporting functions to help with diagnosis.
+
+2009-09-17  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el (weblogger-toggle-edit-body): New function to
+	toggle between weblogger-entry-mode - where we can edit meta data
+	- and another mode - where we'll edit the content.
+	(weblogger-entry-mode): Make it a properly derived mode.
+	(weblogger-entry-mode-map): Add keymap for toggle.
+	(weblogger-header): New variable that holds the meta data temporarily.
+	(weblogger-edit-mode,  weblogger-edit-mode-toggle-hook)
+	(weblogger-weblogger-mode-toggle-hook): New customizations to help
+	with mode switching.
+
+2009-09-16  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el: On functions that are conditionally defined,
+	(xml-debug-print, timezone-parse-date), take them out of the
+	eval-when-compile block so that they're compiled into .elc files.
+	(url): Make sure url-http is loaded to avoid warnings
+	later about let-bound variables.
+	(xml-rpc-value-arrayp): Also verify that it is not a dateTime value.
+
+2009-09-13  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el (weblogger-select-configuration): Land in most
+	recent entry after calling.
+	(weblogger-entry-setup-headers): Remove comma so date can be
+	parsed properly.
+	(weblogger-entry-setup-headers): Use keywords/tags properly.
+	(weblogger-prev-entry): typo in function name.
+	(weblogger-response-to-struct): Use keywords/tags in mt_ functions
+	like mt_ api does.  Parse old-style blogger API properly.
+	(weblogger-struct-to-request): Use keywords/tags properly.
+	(weblogger-entry-buffer-to-struct): Use keywords/tags properly.
+
+	* xml-rpc.el (xml-rpc-xml-list-to-value): Handle nil for an int
+	gracefully.  Consolidate dateTime parsing.
+	(xml-rpc-datetime-to-string): Wordpress expects dateTime elements
+	to match the XML-RPC spec and not ISO8601 spec.
+	(xml-rpc-value-to-xml-list): Switch to iso8601 for default.
+
+2009-09-10  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el: Add some autoloads.
+
+2009-09-09  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-rpc-value-to-xml-list): Typo.
+
+	* weblogger.el: General code re-org, function name
+	rationalisation, version bump, fix compilation warnings.
+
+	* xml-rpc.el: Bump the version.
+	(xml-rpc-fault-string, xml-rpc-fault-code): Defvar some previously
+	un-declared vars.
+	(xml-rpc-value-intp, xml-rpc-value-doublep)
+	(xml-rpc-value-stringp): Change from defun to defsubst for
+	consistency.
+	(xml-rpc-request, xml-rpc-list-to-value, xml-rpc-clean): Fix
+	compilation warnings
+
+2009-08-12  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-entity-alist): provide a definition for really
+	old versions of xml.el.
+	(xml-rpc-use-coding-system): Make unicode variables dependent on
+	the existence of utf-8 coding-system.
+	Generally allow use of Emacs that don't understand Unicode --
+	although the HTTP headers still claim to be UTF-8.  Update
+	backwards-compatibility code after testing against XEmacs21.
+
+	* weblogger.el (weblogger-config-name): Make customizable.
+	(weblogger-start-edit-entry-hook): Use XEmacs-compatible form.
+	(weblogger-select-configuration): Fix bugs and make it more
+	reliable.
+	(weblogger-setup-weblog): Properly set weblogger-config-alist.
+	(weblogger-change-server): Checking for correct types.
+	(weblogger-server-username): More type checking.
+	(weblogger-server-password): More type checking.  Also, return "" instead of nil
+	if there is no password set so that the config-alist maintains the
+	correct form.
+
+2009-08-07  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el (weblogger-setup-weblog): Fix up first time use of weblogger case.
+
+2009-08-04  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-rpc-xml-list-to-value): Make sure XML-RPC's
+	dateTime.iso8601 is handled.
+	(xml-rpc-datetime-to-string): Grab the right piece of data.
+	(xml-rpc-request-process-buffer): Kill buffer if not debugging.
+	(timezone-parse-date): Conditionally override if the version we
+	have can't handle iso8601 basic format.
+
+	* weblogger.el (weblogger-config-alist): Fixed customization, but
+	now weblogger-config-alist is backward-incompatible.
+	(weblogger-start-edit-entry-hook, weblogger-edit-entry-hook)
+	(weblogger-pre-struct-hook): made hooks customizable.
+	(weblogger-select-configuration): Updated to new
+	weblogger-config-alist format.
+	(weblogger-setup-weblog): Updated to new weblog-config-alist
+	format.
+	(weblogger-entry-setup-headers): Changed from “categories” to
+	“tags”.
+	(weblogger-server-username): Correctly handle username retrieval —
+	was double parsing.
+	(weblogger-server-password): Simplify password retreival.  Always
+	prompt if we have a blank password.
+	(weblogger-edit-entry): Change the ordering of buffer setup so
+	hooks are expected to set the modified flag on the buffer if
+	need-be.  Otherwise fix a bug that almost sometimes left the
+	buffer in a modified state.
+	(weblogger-response-to-struct): Retrieve mt_keywords from the
+	response.
+	(weblogger-struct-to-request): Set mt_keywords in the request.
+	(weblogger-entry-buffer-to-struct): Add hook to do any massaging
+	of post (without touching the buffer) before sending to server.
+	(weblogger-entry-buffer-to-struct): Use tags, not categories.
+
+2009-08-03  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el: Override timezone-parse-date with a version that
+	understands the ISO8601 Basic format.
+	(xml-rpc-value-structp): Struct test should look for
+	consp instead of lists of a certain size.
+	(xml-rpc-value-datetimep): Use :datetime keyword to specify data
+	type and eliminate confusion between time structs and lists.
+	(xml-rpc-xml-list-to-value): Grok <i4> element in addition to
+	<int>.  Return dateTime values with :datetime keyword.
+	(xml-rpc-datetime-to-string): New function to format datetime
+	objects.
+	(xml-rpc-value-to-xml-list): Add handling for datetime.
+
+	* weblogger.el Replace eval-backtick construct with funcall.
+	(weblogger-no-capabilities): Update the capability list from what
+	Wordpress.com spits out.
+	(weblogger-select-configuration): Make sure new config overrides
+	all of the old settings.
+	(weblogger-setup-weblog): Reset weblogger-config-name to nil
+	before setting up a new weblog.
+	(weblogger-entry-setup-headers): Use xmlrpc.el's new datetime
+	handling.
+	(weblogger-struct-to-request): Make sure empty fields aren't sent
+	on API calls.
+	(weblogger-determine-capabilities): Fix bug where
+	weblogger-no-capabilities (a defconst, no less) is changed when we
+	examine the capabilites of a server.
+	(weblogger-entry-buffer-to-struct): Use xmlrpc.el's new datetime
+	handling. Fix how categories are set.  Fix cut-n-paste bug where
+	“Keywords” was used instead of “In-Reply-To”.
+
+2009-08-01  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-rpc-allow-unicode-string): New setting to toggle
+	UTF-8-ability before shipping to server.
+	Use Emacs23's xml-print if we're running in Emacs22.
+	Replace obsolete string-to-int with string-to-number.
+
+	* weblogger.el (weblogger-server-url): Fix up default URL to
+	something that actually wrks.
+	(weblogger-save-entry): Typo
+	(weblogger-server-username): Use .authinfo parsing in Emacs23
+	(weblogger-server-password): Use .authinfo parsing in Emacs23
+	(weblogger-edit-entry): Add keywords field
+	(weblogger-response-to-struct): Support for extended entry breaks.
+
+2007-12-27  Mark A. Hershberger  <mah@everybody.org>
+
+	* Add changes from Wickersheimer Jeremy <jwickers@gmail.com> to
+	support categories, etc.
+
+	* xml-rpc.el (xml-rpc-value-datep): New function to determine if a
+	string is an ISO date.
+	(xml-rpc-value-to-xml-list): Add support for vector inputs.  Add
+	support for strings that are really dates.
+
+	* weblogger.el (weblogger-category-list)
+	(weblogger-category-ring): New variables to support categories.
+	(weblogger-save-entry): No longer publish by default.
+	(weblogger-publish-entry): New function to publish entry.
+	(weblogger-api-list-categories)
+	(weblogger-api-blogger-list-categories)
+	(weblogger-api-meta-list-categories): New functions to support
+	categories.
+	(weblogger-response-to-struct): Add categories.
+	(weblogger-struct-to-request): Add categories.
+	(weblogger-fetch-entries): Initialize categories variables.
+	(weblogger-determine-capabilities): Add categories test.
+	(weblogger-entry-buffer-to-struct): Add support for categories vector.
+
+2007-11-23  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-rpc-value-structp, xml-rpc-value-to-xml-list):
+	Apply patch from Vitaly Mayatskikh <vmayatsk@redhat.com> to add
+	support for more complex struct types.
+
+2007-03-23  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el: Add xml-rpc patch from trac-wiki-mode
+	(http://www.meadowy.org/~gotoh/projects/trac-wiki/) to add support
+	for plain (non-encoded) Unicode strings.
+
+2006-03-06  Mark A. Hershberger  <mah@everybody.org>
+
+	* ChangeLog, weblogger.el, xml-rpc.el: Update with my changes.
+
+2006-03-06  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el: Fix up comments on setting up.
+
+	* xml-rpc.el (xml-rpc-request-process-buffer): Make regex less
+	picky to avoid some problems with CVS Emacs.
+
+2005-11-11  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-rpc-xml-list-to-value): Take away dependency on
+	rfc2047.el.
+	(xml-rpc-base64-decode-unicode): New variable.
+
+2005-10-16  Mark A. Hershberger  <mah@everybody.org>
+
+	* weblogger.el: Update copyright.
+	(weblogger-blogger-firstline-title): New boolean customizable.
+	Allows the user to put seamlessly put titles in the first line of
+	posts.  Defaults to false.
+	(weblogger-start-edit-entry-hook): New hook to run.  Default
+	action is to delete ^M characters.
+	(weblogger-start-entry): Allow new entries to be editted.
+	ring-index shouldn’t be nil.  Also, no need to erase-buffer since
+	that is done in weblogger-edit-entry.
+	(weblogger-entry-setup-headers): Pass entry in with flag for
+	setting the body-line.  Substantial rewrite to simplify the code
+	and reduce the number of temp variables.
+	(weblogger-save-entry): Update headers after creating a new entry.
+	(weblogger-api-blogger-get-content): New function.  Get content
+	— adding “<title>” if necessary.
+	(weblogger-api-blogger-send-edits): Remove references to globals.
+	(weblogger-api-new-entry): Add entry-id of newly-posted entry to
+	ring-ref data.
+	(weblogger-api-blogger-new-entry, weblogger-api-meta-new-entry):
+	Simplify.  Move duplicated functionality to weblogger-api-new-entry.
+	(weblogger-edit-entry): Add hook runner.
+	(weblogger-response-to-struct): Convert entries with title as
+	first line to the struct we want.
+
+	* xml-rpc.el: Update copyright.
+	(xml-rpc-response-errorp): make safe.
+
+2005-10-11  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-rpc-xml-list-to-value): Handle dateTime.iso8601.
+	(xml-rpc-request-process-buffer): Handle <methodResponse> without
+	XML PI.
+
+	* weblogger.el (weblogger-no-capabilities): Update capability list.
+	(weblogger-entry-setup-headers): Add keyword/category handing
+	attempt using patch from http://blogs.openaether.org/?p=126.
+	(weblogger-entry-buffer-to-struct): s/category/categories/;
+
+2005-05-26  Mark A. Hershberger  <mah@everybody.org>
+
+	* xml-rpc.el (xml-rpc-xml-list-to-value): Use version of
+	rfc2047-decode that is in emacs21.
+
+	* weblogger.el: More wishful thinking in the comments re:
+	livejournal support.
+	(weblogger-entry-setup-headers): Go to end of headers before
+	inserting the message seperator.
+	(weblogger-response-to-struct): Use assoc-ignore-case so we get
+	proper matches.
+
