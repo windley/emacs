@@ -1527,7 +1527,7 @@ Can be used as a value for `html-mode-hook'."
   ("Value: "
    "<li><a href=\"" (skeleton-read "URL: ")
    "\">" (skeleton-read "Anchor: ")
-   "</a></li>"
+   "</a> - "(skeleton-read "Commentary: ")"</li>"
    \n))
 
 
