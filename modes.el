@@ -50,13 +50,89 @@
 	    (setq word-wrap 1)
 	    (flyspell-mode 1)))
 
-(require 'remember)
-(org-remember-insinuate)
+;(require 'remember)
+;(org-remember-insinuate)
+
+(require 'google-weather)
+(require 'org-google-weather)
+
 
 (setq org-directory "~/Dropbox/Documents/orgfiles/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
-(add-hook 'remember-mode-hook 'org-remember-apply-template)
-(define-key global-map "\C-cr" 'org-remember)
+(add-hook 'org-capture-mode-hook '(lambda () (setq truncate-lines nil)))
+(define-key global-map "\C-cr" 'org-capture)
+
+
+(setq org-capture-templates 
+  `(
+	  ("a" "Appointment" entry (file+headline 
+				    ,(concat org-directory "taskdiary.org") "Calendar") 
+	   "* APPT %^{Description} %^g
+%?
+Added: %U") 
+
+	  ("n" "Notes" entry (file+datetree 
+			      ,(concat org-directory "notes.org"))
+	   "* %^{Description} %^g %? 
+Added: %U") 
+
+	  ("b" "Book" entry (file+datetree 
+				   ,(concat  "~/Dropbox/Documents/KRL Book/krl.txt"))
+	   "* Topic: %^{Description}  %^g
+%?
+Added: %U") 
+
+	  ("j" "Journal" entry (file ,(concat org-directory "journal.org"))
+	   "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
+%?
+")
+	  ))
+
+
+
+ (defadvice org-capture-finalize (after delete-capture-frame activate)  
+   "Advise capture-finalize to close the frame if it is the capture frame"  
+   (if (equal "capture" (frame-parameter nil 'name))  
+       (delete-frame)))  
+   
+ (defadvice org-capture-destroy (after delete-capture-frame activate)  
+   "Advise capture-destroy to close the frame if it is the rememeber frame"  
+   (if (equal "capture" (frame-parameter nil 'name))  
+       (delete-frame)))  
+   
+ ;; make the frame contain a single window. by default org-capture  
+ ;; splits the window.  
+ (add-hook 'org-capture-mode-hook  
+           'delete-other-windows)  
+   
+ (defun make-capture-frame ()  
+   "Create a new frame and run org-capture."  
+   (interactive)  
+   (make-frame '((name . "capture") (width . 120) (height . 15)))  
+   (select-frame-by-name "capture") 
+   (setq word-wrap 1)
+   (setq truncate-lines nil)
+   (org-capture))  
+
+;;; weather
+(defun journal-google-weather (location)
+  (let* ((data (ignore-errors
+		 (google-weather-get-data location)))
+	 (forecast (when data (caddr (google-weather-data->weather data)))))
+    (when forecast
+      (let ((condition (cdaadr (assoc 'condition forecast)))
+            (low (cdaadr (assoc 'low forecast)))
+            (high (cdaadr (assoc 'high forecast)))
+            (city (google-weather-data->city data))
+	    )
+	(format-spec "%L | %c | High: %hF Low: %lF"
+		     `((?c . ,condition)
+		       (?L . ,location)
+		       (?l . ,low)
+		       (?h . ,high)))))))
+
+
+
 
 (setq org-remember-templates
       `(("Journal" ?j "\n* %^{day's theme} %T \n%[~/emacs/templates/dailyreview.txt]%i\n" ,(concat org-directory "journal.org"))

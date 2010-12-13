@@ -25,6 +25,7 @@
   (add-path "emacs/org-7.4/lisp")
   (add-path "emacs/git")
   (add-path "emacs/weblogger")
+  (add-path "emacs/google-weather")
 )
 
 (defvar aquamacs-p (string-match "Aquamacs" (version)))
