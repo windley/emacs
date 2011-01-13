@@ -48,6 +48,7 @@
 	  (lambda ()
 	    'turn-on-font-lock
 	    (setq word-wrap 1)
+	    (setq truncate-lines nil)
 	    (flyspell-mode 1)))
 
 ;(require 'remember)
