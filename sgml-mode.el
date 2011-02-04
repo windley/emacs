@@ -1631,6 +1631,48 @@ Can be used as a value for `html-mode-hook'."
   "</div>"
   )
 
+(defun make-html-table-string (textblock delim)
+    "Transform the string TEXTBLOCK into a HTML marked up table.
+    “\n” is used as delimiter of rows.
+    The argument DELIM is a char used as the demiliter for columns.
+    
+    See the parent function `make-html-table'."
+    (setq textblock (replace-regexp-in-string delim "</td><td>" textblock))
+    (setq textblock (replace-regexp-in-string "\n" "</td></tr>\n<tr><td>" textblock))
+    (setq textblock (substring textblock 0 -8)) ; delete the beginning “<tr><td>” in last line
+    (concat "<table class=\"nrm\">\n<tr><td>" textblock "</table>")
+)
+  
+(defun make-html-table (sep)
+  "Transform the current paragraph into a HTML table.
+
+The “current paragraph” is defined as having empty lines before and
+after the block of text the curson is on.
+SEP is a string used as a delimitor for columns.
+
+For example:
+
+a*b*c
+1*2*3
+this*and*that
+
+with “*” as separator, becomes
+
+<table class=\"nrm\">
+<tr><td>a</td><td>b</td><td>c</td></tr>
+<tr><td>1</td><td>2</td><td>3</td></tr>
+<tr><td>this</td><td>and</td><td>that</td></tr>
+</table>"
+  (interactive "sEnter string pattern for column separation:")
+  (let (bds p1 p2 myStr)
+    (setq bds (bounds-of-thing-at-point 'paragraph))
+    (setq p1 (+ (car bds) 1))
+    (setq p2 (cdr bds))
+    (setq myStr (buffer-substring-no-properties p1 p2))
+    (delete-region p1 p2)
+    (insert (make-html-table-string myStr sep) "\n")
+  ))
+
 
 
 (provide 'sgml-mode)
