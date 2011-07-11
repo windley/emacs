@@ -7,9 +7,10 @@
   nil
   '(setq v1 nil
 	 v2 nil
-	 v3 "newsletter")
+	 v3 nil)
   "<!-- title: \n"   (or v1 (setq v1 (skeleton-read "Title: "))) "\n-->\n"
-  "<!-- keywords: \n"   (or v2 (setq v2 (skeleton-read "keywords: "))) "\n-->\n"
+  "<!-- keywords: \n"   (or v2 (setq v2 (skeleton-read "Keywords: "))) "\n-->\n"
+  "<!-- excerpt: \n"   (or v3 (setq v3 (skeleton-read "Excerpt: "))) "\n-->\n"
   "<p>" \n _  \n "</p>")
 
 (defun make-blog-name (name)
