@@ -7,12 +7,18 @@
 (setq-default fill-column 69)
 (setq default-major-mode 'org-mode)
 
+;; smart tabbing
+(require 'smart-tab)
+(global-smart-tab-mode 1)
+
 
 (setq text-mode-hook
    '(lambda () 
       (setq word-wrap 1)
       (abbrev-mode t)
-      (flyspell-mode)))
+      (flyspell-mode)
+      )
+   )
 
 (setq ispell-program-name "/usr/local/bin/ispell") ;; has to be set before load.
 (if (file-exists-p "/usr/local/bin/ispell") 
