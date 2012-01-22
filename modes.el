@@ -1,42 +1,39 @@
 ;; my major mode configs
 
-(setq ispell-program-name "/usr/local/bin/ispell") ;; has to be set before load.
-(require 'ispell)
 
 ;;set up major mode
 (setq-default fill-column 69)
 (setq default-major-mode 'org-mode)
 
-
 (setq text-mode-hook
    '(lambda () 
       (setq word-wrap 1)
       (abbrev-mode t)
-      (flyspell-mode)))
+      (flyspell-mode t)))
+
 
 (setq ispell-program-name "/usr/local/bin/ispell") ;; has to be set before load.
 (if (file-exists-p "/usr/local/bin/ispell") 
-    (require 'ispell)
-)
-
-(if (file-exists-p "/usr/local/bin/ispell") 
+;    (require 'ispell)
     ;;; flyspell
     (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 ;   (add-to-list 'flyspell-prog-text-faces "nxml-text-face")
 )
+
+
 
 ;;; tex
 (setq tex-mode-hook
    '(lambda () 
       (setq word-wrap 1)
       (abbrev-mode t)
-      (flyspell-mode)))
+      (flyspell-mode t)))
 
 (setq latex-mode-hook
    '(lambda () 
       (setq word-wrap 1)
       (abbrev-mode t)
-      (flyspell-mode)))
+      (flyspell-mode t)))
 
 ;;; org-mode
 (require 'org-install)
@@ -154,7 +151,8 @@ Added: %U")
       (setq word-wrap 1)
 ;      (auto-fill-mode 1)
       (abbrev-mode t)
-      (flyspell-prog-mode)))
+      (flyspell-mode t)
+      ))
 
 ;;; YAML
 (require 'yaml-mode)
@@ -198,7 +196,7 @@ Added: %U")
 (setq bibtex-mode-hook
    '(lambda () 
       (abbrev-mode t)
-      (flyspell-mode)))
+      (flyspell-mode t)))
 
 
 
@@ -230,6 +228,13 @@ Added: %U")
 (defalias 'perl-mode 'cperl-mode)
 (setq cperl-electric-keywords t)
 (setq cperl-invalid-face (quote off)) ;; don't highlight trailing whitespace
+
+(add-hook 'cperl-mode-hook
+          '(lambda ()
+	     (flyspell-prog-mode t)
+	     ))    
+
+
 
 ;;; speedbar
 (autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
