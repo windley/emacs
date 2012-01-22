@@ -1673,6 +1673,9 @@ with “*” as separator, becomes
     (insert (make-html-table-string myStr sep) "\n")
   ))
 
+; Emacs Blogging Tool
+; Key: 2da7cef3835282d79e30e8f36edf6c5b
+; Secret: 6340a4a867805044 
 
 
 (provide 'sgml-mode)
