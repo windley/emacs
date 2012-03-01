@@ -6,8 +6,8 @@
 (setq default-major-mode 'org-mode)
 
 ;; smart tabbing
-(require 'smart-tab) ;;; http://www.emacswiki.org/emacs/TabCompletion#SmartTab
-(global-smart-tab-mode 1)
+;(require 'smart-tab) ;;; http://www.emacswiki.org/emacs/TabCompletion#SmartTab
+;(global-smart-tab-mode 1)
 
 (setq text-mode-hook
    '(lambda () 
@@ -262,6 +262,14 @@ Added: %U")
 (ido-mode t)
 (setq ido-enable-flex-matching t) ; fuzzy matching is a must have
 
+;;; smex
+(require 'smex)
+(smex-initialize)
+
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; use normal find-file function for ftp files
 (setq ido-slow-ftp-host-regexps '(".*"))

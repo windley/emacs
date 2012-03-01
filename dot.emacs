@@ -36,6 +36,7 @@
 (if aquamacs-p (load-library "aquamacs")) ;; specific to Aquaemacs
 (load-library "my-config")                ;; blogging stuff
 
+
 (require 'color-theme)
 (eval-after-load "color-theme"
   '(progn
