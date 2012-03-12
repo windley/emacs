@@ -288,6 +288,10 @@ Added: %U")
             ("\\.php3$" . php-mode))
               auto-mode-alist))
 
+;;; markdown
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t) 
+(setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
+
 (require 'git)
 
 
