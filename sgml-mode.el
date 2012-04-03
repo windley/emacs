@@ -134,6 +134,7 @@ This takes effect when first loading the sgml-mode library.")
   "Keymap for SGML mode.  See also `sgml-specials'.")
 
 
+
 (defvar sgml-mode-syntax-table
   (let ((table (copy-syntax-table text-mode-syntax-table)))
     (modify-syntax-entry ?< "(>" table)
@@ -888,6 +889,7 @@ This takes effect when first loading the library.")
     (define-key map "\C-c1" 'html-headline-1)
     (define-key map "\C-c>" 'html-entity-gt)
     (define-key map "\C-c<" 'html-entity-lt)
+    (define-key map "\C-c-" 'insert-mdash)
     (define-key map "\C-c\r" 'html-paragraph)
     (define-key map "\C-cb" 'html-line)
     (define-key map "\C-c\C-c-" 'html-horizontal-rule)
@@ -917,7 +919,8 @@ This takes effect when first loading the library.")
 	  (define-key map "\C-cn" 'html-name-anchor)
 	  (define-key map "\C-ci" 'html-image)))
     (define-key map "\C-c\C-s" 'html-autoview-mode)
-    (define-key map "\C-c\C-v" 'browse-url-of-buffer)
+    (define-key map "\C-cm" 'markdown-preview-file) 
+;    (define-key map "\C-c\C-v" 'browse-url-of-buffer)
     (define-key map [menu-bar html] (cons "HTML" menu-map))
     (define-key menu-map [html-autoview-mode]
       '("Toggle Autoviewing" . html-autoview-mode))
@@ -1463,9 +1466,15 @@ Can be used as a value for `html-mode-hook'."
   "&lt;")
 
 (define-skeleton html-entity-gt
-  "HTML less than entity."
+  "HTML greater than entity."
   nil
   "&gt;")
+
+(define-skeleton insert-mdash
+  "Insert an mdash entity at point"
+  nil
+  "&mdash;"
+  )
 
 (define-skeleton google-link
   "HTML anchor tag with href attribute."
@@ -1631,6 +1640,7 @@ Can be used as a value for `html-mode-hook'."
   "</div>"
   )
 
+
 (defun make-html-table-string (textblock delim)
     "Transform the string TEXTBLOCK into a HTML marked up table.
     “\n” is used as delimiter of rows.
@@ -1672,6 +1682,15 @@ with “*” as separator, becomes
     (delete-region p1 p2)
     (insert (make-html-table-string myStr sep) "\n")
   ))
+
+
+(defun markdown-preview-file ()
+  "run Marked on the current file and revert the buffer"
+  (interactive)
+  (shell-command 
+   (format "open -a /Applications/Marked.app %s" 
+       (shell-quote-argument (buffer-file-name))))
+)
 
 ; Emacs Blogging Tool
 ; Key: 2da7cef3835282d79e30e8f36edf6c5b
