@@ -30,3 +30,5 @@
 (require 'smooth-scrolling)
 (setq smooth-scroll-margin 5)
 
+(require 'json-pretty-print)
+

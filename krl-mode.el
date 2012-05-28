@@ -7,7 +7,9 @@
 "Comment or uncomment current line or region in a smart way. For detail, see `comment-dwim'."
    (interactive "*P")
    (require 'newcomment)
-   (let ((deactivate-mark nil) (comment-start "//") (comment-end ""))
+   (let ((deactivate-mark nil) 
+	 (comment-start " //") 
+	 (comment-end ""))
      (comment-dwim arg)))
 
 ;; define several class of keywords
@@ -19,6 +21,7 @@
 	"rule" "is" "select" "when" "using" "setting" "foreach" "pre" "if" "then" "every" "choose" 
 	"callbacks" "success" "failure" "fires" "always"
 	"function" "datasource" "dataset" "="
+        "set" 
 	))
 
 (defvar krl-types nil
@@ -55,7 +58,7 @@
 ;; each class of keyword is given a particular face
 (setq krl-font-lock-keywords
   `(
-;;    ("\\(<<\\(?:.\\)*?>>\\)" . font-lock-string-face)
+;    ("\\(<<\\(?:.\\)*?>>\\)" . font-lock-string-face)
     (,krl-type-regexp . font-lock-type-face)
     (,krl-constant-regexp . font-lock-constant-face)
     (,krl-event-regexp . font-lock-builtin-face)
@@ -77,7 +80,8 @@
   (setq font-lock-defaults '((krl-font-lock-keywords)))
 
   ;; C++ style comment: "// ..." 
-  (modify-syntax-entry ?\/ ". 12b" krl-mode-syntax-table)
+  (modify-syntax-entry ?\s ". 1b" krl-mode-syntax-table)
+  (modify-syntax-entry ?\/ ". 23b" krl-mode-syntax-table)
   (modify-syntax-entry ?\n "> b" krl-mode-syntax-table)
 
 
