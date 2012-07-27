@@ -18,8 +18,9 @@
    )
 
 
-(setq ispell-program-name "/usr/local/bin/ispell") ;; has to be set before load.
-(if (file-exists-p "/usr/local/bin/ispell") 
+(setq ispell-program-name "/opt/local/bin/ispell") ;; has to be set before load.
+(setq ispell-library-directory "/opt/local/lib")
+(if (file-exists-p "/opt/local/bin/ispell") 
 ;    (require 'ispell)
     ;;; flyspell
     (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
