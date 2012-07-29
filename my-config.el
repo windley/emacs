@@ -4,7 +4,7 @@
 
 ;;; general set up
 (transient-mark-mode t)      ; higlight to mark
-(tool-bar-mode nil)          ; Hate this toolbar. remove it
+(tool-bar-mode nil)          ; Hate, hate, hate this toolbar. remove it
 (server-start)               ; start the server for emacsclient
 
 (setq display-time-24hr-format t)  ;24h time
@@ -18,7 +18,7 @@
 (setq abbrev-mode t)
 
 ;;; ispell
-(setq ispell-program-name "/usr/local/bin/ispell") 
+(setq ispell-program-name "/opt/local/bin/ispell") 
 (setq ispell-personal-dictionary "~/lib/ispell/personal-dictionary") 
 (setq ispell-silently-savep t)   
 (setq ispell-dictionary "english")
