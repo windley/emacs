@@ -41,7 +41,8 @@
 
 (defgroup org-google-weather nil
   "Google Weather for Org mode."
-  :group 'comm)
+  :group 'comm
+  :group 'org)
 
 (defcustom org-google-weather-location calendar-location-name
   "Default location for org-google-weather."
@@ -97,50 +98,78 @@ Valid %-sequences are:
     (storm . "weather-storm.png")
     (thunderstorm . "weather-storm.png")
     (sunny . "weather-clear.png"))
-  "Icons to use to illustrate the weather.")
+  "Icons to use to illustrate the weather."
+  :group 'org-google-weather)
+
+(defcustom org-google-weather-use-google-icons nil
+  "Fetch icons from Google or use local ones.
+If you decide to use local ones, you should check
+`org-google-weather-icon-directory' and
+`org-google-weather-icon-alist'. Otherwise, if you want to use
+icons from Google, you have nothing to do."
+  :group 'org-google-weather
+  :type 'boolean)
+
+(defun org-google-weather-get-icon (url)
+  (with-current-buffer
+      (google-weather-retrieve-data-raw url org-google-weather-cache-time)
+    (goto-char (point-min))
+    (unless (search-forward "\n\n" nil t)
+      (error "Data not found"))
+    (let ((data (buffer-substring (point) (point-max))))
+      (kill-buffer (current-buffer))
+      data)))
 
 ;;;###autoload
 (defun org-google-weather (&optional location language)
   "Return Org entry with the weather for LOCATION in LANGUAGE.
 If LOCATION is not set, use org-google-weather-location."
-  (let* ((data (ignore-errors
-                 (google-weather-get-data (or location
-                                              org-google-weather-location)
+  (let* ((location (or location org-google-weather-location))
+         (data (ignore-errors
+                 (google-weather-get-data location
                                           language
                                           org-google-weather-cache-time)))
-         (forecast (when data (google-weather-data->forecast-for-date data date))))
-    (when forecast
-      (let ((condition (cadr (assoc 'condition forecast)))
-            (low (cadr (assoc 'low forecast)))
-            (high (cadr (assoc 'high forecast)))
-            (city (google-weather-data->city data))
-            ;; But *they* told me it's just about calling functions!
-            (icon (when window-system
-                    (cdr
-                     (assoc
-                      (intern
-                       (file-name-sans-extension
-                        (file-name-nondirectory
-                         (cadr (assoc 'icon forecast)))))
-                      org-google-weather-icon-alist))))
-            (temp-symbol (google-weather-data->temperature-symbol data)))
-        (format-spec org-google-weather-format
-                     `((?i . ,(if (and icon org-google-weather-display-icon-p)
-                                  (propertize "icon"
-                                              'display
-                                              (append
-                                               (create-image
-                                                (concat
-                                                 org-google-weather-icon-directory
-                                                 "/"
-                                                 icon)) '(:ascent center))
-                                              'rear-nonsticky '(display))
-                                ""))
-                       (?c . ,condition)
-                       (?L . ,location)
-                       (?C . ,city)
-                       (?l . ,low)
-                       (?h . ,high)
-                       (?s . ,temp-symbol)))))))
+         (problem-cause (when data (google-weather-data->problem-cause data)))
+         (forecast (when (and (null problem-cause) data)
+                     (google-weather-data->forecast-for-date data date))))
+    (if problem-cause
+        (message "%s: %s" location problem-cause)
+      (when forecast
+        (let ((condition (cadr (assoc 'condition forecast)))
+              (low (cadr (assoc 'low forecast)))
+              (high (cadr (assoc 'high forecast)))
+              (city (google-weather-data->city data))
+              ;; But *they* told me it's just about calling functions!
+              (icon (when (and org-google-weather-display-icon-p (display-images-p))
+                      (if org-google-weather-use-google-icons
+                          (create-image (org-google-weather-get-icon
+                                         (cadr (assoc 'icon forecast)))
+                                        nil t)
+                        (create-image
+                         (concat
+                          org-google-weather-icon-directory
+                          "/"
+                          (cdr
+                           (assoc
+                            (intern
+                             (file-name-sans-extension
+                              (file-name-nondirectory
+                               (cadr (assoc 'icon forecast)))))
+                            org-google-weather-icon-alist)))))))
+              (temp-symbol (google-weather-data->temperature-symbol data)))
+          (format-spec org-google-weather-format
+                       `((?i . ,(if icon
+                                    (propertize "icon"
+                                                'display
+                                                (append
+                                                 icon '(:ascent center))
+                                                'rear-nonsticky '(display))
+                                  ""))
+                         (?c . ,condition)
+                         (?L . ,location)
+                         (?C . ,city)
+                         (?l . ,low)
+                         (?h . ,high)
+                         (?s . ,temp-symbol))))))))
 
 (provide 'org-google-weather)

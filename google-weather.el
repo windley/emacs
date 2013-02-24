@@ -38,9 +38,10 @@
   "Google Weather."
   :group 'comm)
 
-(defcustom google-weather-use-https t
+(defcustom google-weather-use-https nil
   "Default protocol to use to access the Google Weather API."
-  :group 'google-weather)
+  :group 'google-weather
+  :type 'boolean)
 
 (defconst google-weather-url
   "www.google.com/ig/api"
@@ -75,7 +76,7 @@
     (url-cache-extract (url-cache-create-filename url))
     (current-buffer)))
 
-(defun google-weather-retrieve-data (url &optional expire-time)
+(defun google-weather-retrieve-data-raw (url &optional expire-time)
   "Retrieve URL and return its data as string.
 If EXPIRE-TIME is set, the data will be fetched from the cache if
 their are not older than EXPIRE-TIME seconds. Otherwise, they
@@ -88,7 +89,18 @@ to 0 force a cache renewal."
                      (url-retrieve-synchronously url)
                    (google-weather-cache-fetch url)))
          data)
-    (with-current-buffer buffer
+    (when (and expired expire-time)
+      (url-store-in-cache buffer))
+    buffer))
+
+(defun google-weather-retrieve-data (url &optional expire-time)
+  "Retrieve URL and return its data as string.
+If EXPIRE-TIME is set, the data will be fetched from the cache if
+their are not older than EXPIRE-TIME seconds. Otherwise, they
+will be fetched and then cached. Therefore, setting EXPIRE-TIME
+to 0 force a cache renewal."
+    (with-current-buffer (google-weather-retrieve-data-raw
+                          url expire-time)
       (goto-char (point-min))
       (unless (search-forward "\n\n" nil t)
         (error "Data not found"))
@@ -96,11 +108,9 @@ to 0 force a cache renewal."
        (point) (point-max)
        (detect-coding-region (point) (point-max) t))
       (set-buffer-multibyte t)
-      (setq data (xml-parse-region (point) (point-max)))
-      (when (and expired expire-time)
-        (url-store-in-cache (current-buffer)))
-      (kill-buffer (current-buffer))
-      data)))
+      (let ((data (xml-parse-region (point) (point-max))))
+        (kill-buffer (current-buffer))
+        data)))
 
 (defun google-weather-build-url (location &optional language)
   "Build URL to retrieve weather for LOCATION in LANGUAGE."
@@ -185,5 +195,21 @@ i.e. (MONTH DAY YEAR)."
 It uses `google-weather-unit-system-temperature-assoc' to find a
 match."
   (cdr (assoc (google-weather-data->unit-system data) google-weather-unit-system-temperature-assoc)))
+
+
+(defun google-weather-data->problem-cause (data)
+  "Return a string if DATA contains a problem cause, `nil' otherwise.
+
+An error message example:
+
+((xml_api_reply
+  ((version . \"1\"))
+  (weather
+   ((module_id . \"0\") (tab_id . \"0\") (mobile_row . \"0\")
+    (mobile_zipped . \"1\") (row . \"0\") (section . \"0\"))
+   (problem_cause ((data . \"Information is temporarily unavailable.\"))))))))"
+  (google-weather-assoc
+   'problem_cause
+   (google-weather-data->weather data)))
 
 (provide 'google-weather)

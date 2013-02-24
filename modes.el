@@ -88,7 +88,8 @@ Added: %U")
 Added: %U") 
 
 	  ("j" "Journal" entry (file ,(concat org-directory "journal.org"))
-	   "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
+;	   "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
+	   "** %^{Title} %U  \"Lindon, UT\")
 %?
 ")
 	  ))
