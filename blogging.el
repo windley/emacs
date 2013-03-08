@@ -10,25 +10,41 @@
 	 v3 nil)
   "<!-- title: \n"   (or v1 (setq v1 (skeleton-read "Title: "))) "\n-->\n"
   "<!-- keywords: \n"   (or v2 (setq v2 (skeleton-read "Keywords: "))) "\n-->\n"
+  "<!-- date: "  (format-time-string "%B %d, %Y %H:%M") " -->\n"
+  "<!-- author: <a href='http://phil.windley.org'>Phil Windley</a> -->\n"
   "<!-- excerpt: \n"   (or v3 (setq v3 (skeleton-read "Excerpt: "))) "\n-->\n"
   "<p>" \n _  \n "</p>")
 
 (defun make-blog-name (name)
     (random t)
-    (concat name
-	    (format-time-string "-%Y%m%d-") 
-	    (number-to-string (random 100))
-            ".html"))
+    (let ((dir-name (concat *blog-dir* name "entries" (format-time-string "/%Y/%m/%d/"))
+		    )
+	  )
+      (concat 
+       dir-name
+       name
+       "-"
+       (format-time-string "%H%M%S")
+;;       (number-to-string (random 100))
+       ".html")
+      ))
 
+;;(find-file (make-blog-name "tech"))
+
+;; must end in /
 (setq *blog-dir* "~/Dropbox/Documents/blogging/")
 
-(defun blog (name)
+(defun blog ()
    "start blogging!"
-   (interactive "sname: " "tech")
-   (let ((name (make-blog-name name))
-	 )
-     (find-file (concat *blog-dir* name))
-     (blogging-skeleton)))
+   (interactive)
+   (let* ((name "tm")
+	  (full-name (make-blog-name name))
+	  (dir-name (file-name-directory full-name))
+	  )
+     (make-directory dir-name t)
+     (find-file full-name)
+     (blogging-skeleton)
+     ))
 
 (global-set-key "\C-x\M-b" 'blog)
 

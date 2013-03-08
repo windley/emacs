@@ -890,6 +890,7 @@ This takes effect when first loading the library.")
     (define-key map "\C-c>" 'html-entity-gt)
     (define-key map "\C-c<" 'html-entity-lt)
     (define-key map "\C-c-" 'insert-mdash)
+    (define-key map "\C-cp" 'html-code-block)
     (define-key map "\C-c\r" 'html-paragraph)
     (define-key map "\C-cb" 'html-line)
     (define-key map "\C-c\C-c-" 'html-horizontal-rule)
@@ -1423,6 +1424,12 @@ Can be used as a value for `html-mode-hook'."
   "HTML code mode."
   nil
   "<code>" _ "</code>")
+
+(define-skeleton html-code-block
+  "HTML code block."
+  nil
+  (if (bolp) nil ?\n)
+  \n "<pre class='code'>" \n _ \n "</pre>" \n \n )
 
 
 

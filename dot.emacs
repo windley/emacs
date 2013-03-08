@@ -36,6 +36,12 @@
 (if aquamacs-p (load-library "aquamacs")) ;; specific to Aquaemacs
 (load-library "my-config")                ;; blogging stuff
 
+;; use only one desktop
+(setq desktop-path '("~/tmp/"))
+(setq desktop-dirname "~/tmp/")
+(setq desktop-base-file-name "emacs-desktop")
+(desktop-save-mode 1)
+
 
 (require 'color-theme)
 (eval-after-load "color-theme"
