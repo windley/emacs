@@ -17,7 +17,7 @@
 
 (defun make-blog-name (name)
     (random t)
-    (let ((dir-name (concat *blog-dir* name (format-time-string "/%Y/%m/%d/"))
+    (let ((dir-name (concat *blog-dir* name "entries" (format-time-string "/%Y/%m/%d/"))
 		    )
 	  )
       (concat 
