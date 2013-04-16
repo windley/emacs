@@ -12,12 +12,13 @@
   "<!-- keywords: \n"   (or v2 (setq v2 (skeleton-read "Keywords: "))) "\n-->\n"
   "<!-- date: "  (format-time-string "%B %d, %Y %H:%M") " -->\n"
   "<!-- author: <a href='http://phil.windley.org'>Phil Windley</a> -->\n"
+  "<!-- status: draft -->\n"
   "<!-- excerpt: \n"   (or v3 (setq v3 (skeleton-read "Excerpt: "))) "\n-->\n"
   "<p>" \n _  \n "</p>")
 
 (defun make-blog-name (name)
     (random t)
-    (let ((dir-name (concat *blog-dir* name "entries" (format-time-string "/%Y/%m/%d/"))
+    (let ((dir-name (concat *blog-dir* name "/entries" (format-time-string "/%Y/%m/%d/"))
 		    )
 	  )
       (concat 
