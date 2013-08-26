@@ -10,7 +10,7 @@
 ;(global-smart-tab-mode 1)
 
 (setq text-mode-hook
-   '(lambda () 
+   '(lambda ()
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode t)
@@ -20,24 +20,32 @@
 
 (setq ispell-program-name "/opt/local/bin/ispell") ;; has to be set before load.
 (setq ispell-library-directory "/opt/local/lib")
-(if (file-exists-p "/opt/local/bin/ispell") 
+(if (file-exists-p "/opt/local/bin/ispell")
 ;    (require 'ispell)
     ;;; flyspell
     (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 ;   (add-to-list 'flyspell-prog-text-faces "nxml-text-face")
 )
 
+(require 'ws-trim)
+
+;;; elisp
+
+(add-hook  'elisp-mode-hook
+	   '(lambda ()
+             (add-to-list ‘write-file-functions ‘delete-trailing-whitespace)
+            ))
 
 
 ;;; tex
 (setq tex-mode-hook
-   '(lambda () 
+   '(lambda ()
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode t)))
 
 (setq latex-mode-hook
-   '(lambda () 
+   '(lambda ()
       (setq word-wrap 1)
       (abbrev-mode t)
       (flyspell-mode t)))
@@ -48,12 +56,12 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
-(add-hook 'org-mode-hook 
-	  (lambda ()
-	    'turn-on-font-lock
-	    (setq word-wrap 1)
-	    (setq truncate-lines nil)
-	    (flyspell-mode 1)))
+(add-hook 'org-mode-hook
+          (lambda ()
+            'turn-on-font-lock
+            (setq word-wrap 1)
+            (setq truncate-lines nil)
+            (flyspell-mode 1)))
 
  (setq org-mobile-directory "~/Dropbox/MobileOrg")
 
@@ -70,84 +78,84 @@
 (define-key global-map "\C-cr" 'org-capture)
 
 
-(setq org-capture-templates 
+(setq org-capture-templates
   `(
-	  ("a" "Appointment" entry (file+headline 
-				    ,(concat org-directory "taskdiary.org") "Calendar") 
-	   "* APPT %^{Description} %^g
+          ("a" "Appointment" entry (file+headline
+                                    ,(concat org-directory "taskdiary.org") "Calendar")
+           "* APPT %^{Description} %^g
 %?
-Added: %U") 
+Added: %U")
 
-	  ("n" "Notes" entry (file+datetree 
-			      ,(concat org-directory "notes.org"))
-	   "* %^{Description} %^g %? 
-Added: %U") 
+          ("n" "Notes" entry (file+datetree
+                              ,(concat org-directory "notes.org"))
+           "* %^{Description} %^g %?
+Added: %U")
 
-	  ("b" "Book" entry (file+datetree 
-				   ,(concat  "~/Dropbox/Documents/KRL Book/krl.txt"))
-	   "* Topic: %^{Description}  %^g
+          ("b" "Book" entry (file+datetree
+                                   ,(concat  "~/Dropbox/Documents/KRL Book/krl.txt"))
+           "* Topic: %^{Description}  %^g
 %?
-Added: %U") 
+Added: %U")
 
-	  ("j" "Journal" entry (file ,(concat org-directory "journal.org"))
-;	   "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
-	   "** %^{Title} %U  \"Lindon, UT\")
+          ("j" "Journal" entry (file ,(concat org-directory "journal.org"))
+;          "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
+           "** %^{Title} %U  \"Lindon, UT\")
 %?
 ")
-	  ))
+          ))
 
 
 
- (defadvice org-capture-finalize (after delete-capture-frame activate)  
-   "Advise capture-finalize to close the frame if it is the capture frame"  
-   (if (equal "capture" (frame-parameter nil 'name))  
-       (delete-frame)))  
-   
- (defadvice org-capture-destroy (after delete-capture-frame activate)  
-   "Advise capture-destroy to close the frame if it is the rememeber frame"  
-   (if (equal "capture" (frame-parameter nil 'name))  
-       (delete-frame)))  
-   
- ;; make the frame contain a single window. by default org-capture  
- ;; splits the window.  
- (add-hook 'org-capture-mode-hook  
-           'delete-other-windows)  
-   
- (defun make-capture-frame ()  
-   "Create a new frame and run org-capture."  
-   (interactive)  
-   (make-frame '((name . "capture") (width . 120) (height . 15)))  
-   (select-frame-by-name "capture") 
+ (defadvice org-capture-finalize (after delete-capture-frame activate)
+   "Advise capture-finalize to close the frame if it is the capture frame"
+   (if (equal "capture" (frame-parameter nil 'name))
+       (delete-frame)))
+
+ (defadvice org-capture-destroy (after delete-capture-frame activate)
+   "Advise capture-destroy to close the frame if it is the rememeber frame"
+   (if (equal "capture" (frame-parameter nil 'name))
+       (delete-frame)))
+
+ ;; make the frame contain a single window. by default org-capture
+ ;; splits the window.
+ (add-hook 'org-capture-mode-hook
+           'delete-other-windows)
+
+ (defun make-capture-frame ()
+   "Create a new frame and run org-capture."
+   (interactive)
+   (make-frame '((name . "capture") (width . 120) (height . 15)))
+   (select-frame-by-name "capture")
    (setq word-wrap 1)
    (setq truncate-lines nil)
-   (org-capture))  
+   (org-capture))
 
 ;;; weather
 (defun journal-google-weather (location)
   (let* ((data (ignore-errors
-		 (google-weather-get-data location)))
-	 (forecast (when data (caddr (google-weather-data->weather data)))))
+                 (google-weather-get-data location)))
+         (forecast (when data (caddr (google-weather-data->weather data)))))
     (when forecast
       (let ((condition (cdaadr (assoc 'condition forecast)))
             (low (cdaadr (assoc 'low forecast)))
             (high (cdaadr (assoc 'high forecast)))
             (city (google-weather-data->city data))
-	    )
-	(format-spec "%L | %c | High: %hF Low: %lF"
-		     `((?c . ,condition)
-		       (?L . ,location)
-		       (?l . ,low)
-		       (?h . ,high)))))))
+            )
+        (format-spec "%L | %c | High: %hF Low: %lF"
+                     `((?c . ,condition)
+                       (?L . ,location)
+                       (?l . ,low)
+                       (?h . ,high)))))))
 
 
 
 
 (setq org-remember-templates
       `(("Journal" ?j "\n* %^{day's theme} %T \n%[~/emacs/templates/dailyreview.txt]%i\n" ,(concat org-directory "journal.org"))
-	("Book" ?b "\n* %^{Book Title} %T :BOOK: \n%[~/emacs/templates/booktemp.txt]%?\n" ,(concat org-directory "book.org"))
-	("Notes" ?n "\n* %^{topic} %T \n%i%?\n" ,(concat org-directory "notes.org"))
-	("Fax" ?f "\n* From: Phil Windley\n* Date: %T\n* To: %^{addresses} \n%i%?\n" ,(concat org-directory "faxes.org"))
-	))
+        ("Book" ?b "\n* %^{Book Title} %T :BOOK: \n%[~/emacs/templates/booktemp.txt]%?\n" ,(concat org-directory "book.org"))
+        ("Notes" ?n "\n* %^{topic} %T \n%i%?\n" ,(concat org-directory "notes.org"))
+        ("Fax" ?f "\n* From: Phil Windley\n* Date: %T\n* To: %^{addresses} \n%i%?\n" ,(concat org-directory "faxes.org"))
+        ))
 
 
 ;;; HTML
@@ -157,7 +165,7 @@ Added: %U")
 (add-to-list 'auto-mode-alist '("\.inc$" . html-mode))
 (add-to-list 'auto-mode-alist '("\.body$" . html-mode))
 (setq html-mode-hook
-   '(lambda () 
+   '(lambda ()
       (setq word-wrap 1)
 ;      (auto-fill-mode 1)
       (abbrev-mode t)
@@ -204,7 +212,7 @@ Added: %U")
     ("pdf" "PDF file (for bib2xhtml)")
     ("dvi" "DVI file (for bib2xhtml)")))
 (setq bibtex-mode-hook
-   '(lambda () 
+   '(lambda ()
       (abbrev-mode t)
       (flyspell-mode t)))
 
@@ -225,8 +233,8 @@ Added: %U")
 (add-hook 'ruby-mode-hook
           '(lambda ()
              (inf-ruby-keys)
-	     (flyspell-prog-mode)
-	     ))    
+             (flyspell-prog-mode)
+             ))
 
 (require 'rails)
 (require 'ruby-electric)
@@ -241,10 +249,12 @@ Added: %U")
 
 (add-hook 'cperl-mode-hook
           '(lambda ()
-	     (flyspell-prog-mode t)
-	     ))    
-
-
+             (flyspell-prog-mode t)
+             ))
+(add-hook  'cperl-mode-hook
+           '(lambda ()
+             (add-to-list ‘write-file-functions ‘delete-trailing-whitespace)
+            ))
 
 ;;; speedbar
 (autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
@@ -293,14 +303,14 @@ Added: %U")
               auto-mode-alist))
 
 ;;; markdown
-(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t) 
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
 
 (defun markdown-preview-file ()
   "run Marked on the current file and revert the buffer"
   (interactive)
-  (shell-command 
-   (format "open -a /Applications/Marked.app %s" 
+  (shell-command
+   (format "open -a /Applications/Marked.app %s"
        (shell-quote-argument (buffer-file-name))))
 )
 (global-set-key "\C-cm" 'markdown-preview-file)
