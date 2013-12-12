@@ -14,6 +14,7 @@
   "<!-- author: <a href='http://phil.windley.org'>Phil Windley</a> -->\n"
   "<!-- status: draft -->\n"
   "<!-- excerpt: \n"   (or v3 (setq v3 (skeleton-read "Excerpt: "))) "\n-->\n"
+  "<!-- postimage: -->\n"
   "<p>" \n _  \n "</p>")
 
 (defun make-blog-name (name)
