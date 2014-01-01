@@ -42,6 +42,9 @@
 (setq desktop-base-file-name "emacs-desktop")
 (desktop-save-mode 1)
 
+;; Real men end follow periods with one space only.
+(setq sentence-end "[.?!][]\"')}]*\\($\\|[ \t]\\)[ \t\n]*")
+(setq sentence-end-double-space nil)
 
 (require 'color-theme)
 (eval-after-load "color-theme"

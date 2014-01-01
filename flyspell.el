@@ -3,8 +3,8 @@
 
 ;; Copyright (C) 1998, 2000, 2003, 2004, 2005 Free Software Foundation, Inc.
 
-;; Author: Manuel Serrano <Manuel.Serrano@sophia.inria.fr>
-;; Version: 1.7o
+;; Author: Manuel Serrano <Manuel.Serrano@inria.fr>
+;; Version: 1.7p
 ;; Keywords: convenience
 
 ;; This file is part of GNU Emacs.
@@ -586,7 +586,7 @@ in your .emacs file.
 (defun flyspell-version ()
   "The flyspell version"
   (interactive)
-  "1.7o")
+  "1.7p")
 
 ;*---------------------------------------------------------------------*/
 ;*    flyspell-accept-buffer-local-defs ...                            */
@@ -1017,47 +1017,49 @@ Mostly we check word delimiters."
 ;*       previous word nor the current word                            */
 ;*---------------------------------------------------------------------*/
 (defun flyspell-post-command-hook ()
-  "The `post-command-hook' used by flyspell to check a word in-the-fly."
+  "The `post-command-hook' used by flyspell to check a word on-the-fly."
   (interactive)
-  (let ((command this-command))
-    (if (flyspell-check-pre-word-p)
-	(save-excursion
-	  '(flyspell-debug-signal-pre-word-checked)
-	  (set-buffer flyspell-pre-buffer)
-	  (save-excursion
-	    (goto-char flyspell-pre-point)
-	    (flyspell-word))))
-    (if (flyspell-check-word-p)
-	(progn
-	  '(flyspell-debug-signal-word-checked)
-	  (flyspell-word)
-	  ;; we remember which word we have just checked.
-	  ;; this will be used next time we will check a word
-	  ;; to compare the next current word with the word
-	  ;; that as been registered in the pre-command-hook
-	  ;; that is these variables are used within the predicate
-	  ;; FLYSPELL-CHECK-PRE-WORD-P
-	  (setq flyspell-pre-pre-buffer (current-buffer))
-	  (setq flyspell-pre-pre-point  (point)))
-      (progn
-	(setq flyspell-pre-pre-buffer nil)
-	(setq flyspell-pre-pre-point  nil)
-	;; when a word is not checked because of a delayed command
-	;; we do not disable the ispell cache.
-	(if (and (symbolp this-command) (get this-command 'flyspell-delayed))
-	    (progn
-	      (setq flyspell-word-cache-end -1)
-	      (setq flyspell-word-cache-result '_)))))
-    (while (consp flyspell-changes)
-      (let ((start (car (car flyspell-changes)))
-	    (stop  (cdr (car flyspell-changes))))
-	(if (flyspell-check-changed-word-p start stop)
+  (when flyspell-mode
+    (with-local-quit
+      (let ((command this-command))
+	(if (flyspell-check-pre-word-p)
 	    (save-excursion
-	      '(flyspell-debug-signal-changed-checked)
-	      (goto-char start)
-	      (flyspell-word)))
-	(setq flyspell-changes (cdr flyspell-changes))))
-    (setq flyspell-previous-command command)))
+	      '(flyspell-debug-signal-pre-word-checked)
+	      (set-buffer flyspell-pre-buffer)
+	      (save-excursion
+		(goto-char flyspell-pre-point)
+		(flyspell-word))))
+	(if (flyspell-check-word-p)
+	    (progn
+	      '(flyspell-debug-signal-word-checked)
+	      (flyspell-word)
+	      ;; we remember which word we have just checked.
+	      ;; this will be used next time we will check a word
+	      ;; to compare the next current word with the word
+	      ;; that as been registered in the pre-command-hook
+	      ;; that is these variables are used within the predicate
+	      ;; FLYSPELL-CHECK-PRE-WORD-P
+	      (setq flyspell-pre-pre-buffer (current-buffer))
+	      (setq flyspell-pre-pre-point  (point)))
+	  (progn
+	    (setq flyspell-pre-pre-buffer nil)
+	    (setq flyspell-pre-pre-point  nil)
+	    ;; when a word is not checked because of a delayed command
+	    ;; we do not disable the ispell cache.
+	    (if (and (symbolp this-command) (get this-command 'flyspell-delayed))
+		(progn
+		  (setq flyspell-word-cache-end -1)
+		  (setq flyspell-word-cache-result '_)))))
+	(while (consp flyspell-changes)
+	  (let ((start (car (car flyspell-changes)))
+		(stop  (cdr (car flyspell-changes))))
+	    (if (flyspell-check-changed-word-p start stop)
+		(save-excursion
+		  '(flyspell-debug-signal-changed-checked)
+		  (goto-char start)
+		  (flyspell-word)))
+	    (setq flyspell-changes (cdr flyspell-changes))))
+	(setq flyspell-previous-command command)))))
 
 ;*---------------------------------------------------------------------*/
 ;*    flyspell-notify-misspell ...                                     */
