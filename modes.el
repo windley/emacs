@@ -5,6 +5,11 @@
 (setq-default fill-column 69)
 (setq default-major-mode 'org-mode)
 
+;;; packages
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 ;; smart tabbing
 ;(require 'smart-tab) ;;; http://www.emacswiki.org/emacs/TabCompletion#SmartTab
 ;(global-smart-tab-mode 1)
