@@ -315,6 +315,10 @@ Added: %U")
 )
 (global-set-key "\C-cm" 'markdown-preview-file)
 
+
+(electric-pair-mode 1) ;;; auto-insert matching parens
+(show-paren-mode 1) ;;; turn on paren match highlighting
+
 (require 'git)
 
 

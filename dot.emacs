@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; -*-
 
-(require 'cl)
+(require 'cl-lib)
 
 ;; I keep all my emacs-related stuff under ~/emacs
 (defvar emacs-root "~/" 
@@ -25,7 +25,7 @@
   (add-path "emacs/org-7.4/lisp")
   (add-path "emacs/git")
   (add-path "emacs/weblogger")
-  (add-path "emacs/google-weather")
+;  (add-path "emacs/google-weather")
 )
 
 (defvar aquamacs-p (string-match "Aquamacs" (version)))
@@ -43,12 +43,12 @@
 (desktop-save-mode 1)
 
 
-(require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (load-file "~/emacs/themes/color-theme-dark-vee.el")
-     (color-theme-dark-vee)))
+;; (require 'color-theme)
+;; (eval-after-load "color-theme"
+;;   '(progn
+;;      (color-theme-initialize)
+;;      (load-file "~/emacs/themes/color-theme-dark-vee.el")
+;;      (color-theme-dark-vee)))
 
 
 ;;better face colors for my eyes
