@@ -39,7 +39,6 @@
    (lambda nil
      (interactive)
      (setq flyspell-sort-corrections nil)
-     (define-key markdown-mode-map (kbd "\C-c_") 'markdown-insert-hr)
      ))
 
 
