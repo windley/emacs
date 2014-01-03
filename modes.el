@@ -5,6 +5,11 @@
 (setq-default fill-column 69)
 (setq default-major-mode 'org-mode)
 
+;;; packages
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 ;; smart tabbing
 ;(require 'smart-tab) ;;; http://www.emacswiki.org/emacs/TabCompletion#SmartTab
 ;(global-smart-tab-mode 1)
@@ -18,14 +23,25 @@
    )
 
 
-(setq ispell-program-name "/opt/local/bin/ispell") ;; has to be set before load.
-(setq ispell-library-directory "/opt/local/lib")
-(if (file-exists-p "/opt/local/bin/ispell")
-;    (require 'ispell)
-    ;;; flyspell
-    (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-;   (add-to-list 'flyspell-prog-text-faces "nxml-text-face")
-)
+;; (setq ispell-program-name "/opt/local/bin/ispell") ;; has to be set before load.
+;; (setq ispell-library-directory "/opt/local/lib")
+;; (if (file-exists-p "/opt/local/bin/ispell")
+;; ;    (require 'ispell)
+;;     ;;; flyspell
+;;     (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;; ;   (add-to-list 'flyspell-prog-text-faces "nxml-text-face")
+;; )
+
+
+(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+(setq ispell-list-command "--list") ;;; to support running with aspell instead of ispell
+(add-hook 'flyspell-mode-hook
+   (lambda nil
+     (interactive)
+     (setq flyspell-sort-corrections nil)
+     ))
+
+
 
 (require 'ws-trim)
 
@@ -244,21 +260,24 @@ Added: %U")
 
 ;;; cperl-mode is preferred to perl-mode
 (defalias 'perl-mode 'cperl-mode)
+(add-to-list 'auto-mode-alist '("\\.\\([pP][Llm]\\|al\\)\\'" . cperl-mode))
 (setq cperl-electric-keywords t)
+(setq cperl-electric-parens t)
+(setq cperl-indent-level 4)
 (setq cperl-invalid-face (quote off)) ;; don't highlight trailing whitespace
 
 (add-hook 'cperl-mode-hook
           '(lambda ()
              (flyspell-prog-mode t)
-             ))
-(add-hook  'cperl-mode-hook
-           '(lambda ()
              (add-to-list ‘write-file-functions ‘delete-trailing-whitespace)
             ))
+
 
 ;;; speedbar
 (autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
 (autoload 'speedbar-get-focus "speedbar" "Jump to speedbar frame" t)
+
+
 ;; Texinfo fancy chapter tags
 (add-hook 'texinfo-mode-hook (lambda () (require 'sb-texinfo)))
 ;; HTML fancy chapter tags
@@ -275,6 +294,18 @@ Added: %U")
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t) ; fuzzy matching is a must have
+;; From xsteve. Thants, xsteve.
+(defun ido-recentf ()
+  "Use ido to select a recently opened file from the `recentf-list'"
+  (interactive)
+  (let ((home (expand-file-name (getenv "HOME"))))
+    (find-file
+     (ido-completing-read "Recentf open: "
+                          (mapcar (lambda (path)
+                                    (replace-regexp-in-string home "~" path))
+                                  recentf-list)
+                          nil t))))
+ (global-set-key "\C-x\C-r" 'ido-recentf)
 
 ;;; smex
 (require 'smex)
@@ -314,6 +345,18 @@ Added: %U")
        (shell-quote-argument (buffer-file-name))))
 )
 (global-set-key "\C-cm" 'markdown-preview-file)
+(add-hook 'markdown-mode-hook
+   (lambda nil
+     (interactive)
+     (define-key markdown-mode-map (kbd "\C-c_") 'markdown-insert-hr)
+     (define-key markdown-mode-map (kbd "\C-c-") (lambda nil 
+						   (interactive)
+						   (insert "&mdash;")
+						   ))
+     (define-key markdown-mode-map (kbd "\C-cm") 'markdown-preview-file)
+     ))
+
+ 
 
 
 (electric-pair-mode 1) ;;; auto-insert matching parens

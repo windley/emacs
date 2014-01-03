@@ -18,7 +18,7 @@
 (setq abbrev-mode t)
 
 ;;; ispell
-(setq ispell-program-name "/opt/local/bin/ispell") 
+(setq ispell-program-name "ispell") 
 (setq ispell-personal-dictionary "~/lib/ispell/personal-dictionary") 
 (setq ispell-silently-savep t)   
 (setq ispell-dictionary "english")
