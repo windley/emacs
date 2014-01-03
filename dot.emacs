@@ -50,12 +50,12 @@
 (setq sentence-end "[.?!][]\"')}]*\\($\\|[ \t]\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
 
-;; (require 'color-theme)
-;; (eval-after-load "color-theme"
-;;   '(progn
-;;      (color-theme-initialize)
-;;      (load-file "~/emacs/themes/color-theme-dark-vee.el")
-;;      (color-theme-dark-vee)))
+ (require 'color-theme)
+ (eval-after-load "color-theme"
+   '(progn
+      (color-theme-initialize)
+      (load-file "~/emacs/themes/color-theme-dark-vee.el")
+      (color-theme-dark-vee)))
 
 
 ;;better face colors for my eyes
