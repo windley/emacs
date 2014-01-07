@@ -218,7 +218,9 @@ Added: %U")
 
 
 ;;; MaGIT
-(autoload 'wikipedia-mode "magit.elc")
+(autoload 'magic-mode "magit.elc")
+(global-set-key (kbd "C-x g") 'magit-status)
+
 
 ;;; bibtex mode
 (setq bibtex-maintain-sorted-entries t)
