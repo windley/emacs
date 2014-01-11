@@ -7,6 +7,8 @@
 (global-set-key "\M-4" 'ispell-word)
 (global-set-key "\C-cj" 'flyspell-check-previous-highlighted-word)
 
+(defalias 'qrr 'query-replace-regexp)
+
 ;; Insert date at this point
 (defun insert-date () 
   "Insert date at point."

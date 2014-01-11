@@ -39,7 +39,6 @@
    (lambda nil
      (interactive)
      (setq flyspell-sort-corrections nil)
-     (define-key markdown-mode-map (kbd "\C-c_") 'markdown-insert-hr)
      ))
 
 
@@ -219,7 +218,9 @@ Added: %U")
 
 
 ;;; MaGIT
-(autoload 'wikipedia-mode "magit.elc")
+(autoload 'magic-mode "magit.elc")
+(global-set-key (kbd "C-x g") 'magit-status)
+
 
 ;;; bibtex mode
 (setq bibtex-maintain-sorted-entries t)
@@ -358,6 +359,10 @@ Added: %U")
      ))
 
  
+
+
+(electric-pair-mode 1) ;;; auto-insert matching parens
+(show-paren-mode 1) ;;; turn on paren match highlighting
 
 (require 'git)
 
