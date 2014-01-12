@@ -54,8 +54,15 @@
  (eval-after-load "color-theme"
    '(progn
       (color-theme-initialize)
-      (load-file "~/emacs/themes/color-theme-dark-vee.el")
-      (color-theme-dark-vee)))
+;;      (load-file "~/emacs/themes/color-theme-dark-vee.el")
+;;      (color-theme-dark-vee)
+      (load-file "~/emacs/themes/color-theme-library.el")
+;;      (color-theme-charcoal-black)
+;;      (color-theme-tty-dark)
+;;      (color-theme-hober)
+;;      (color-theme-dark-laptop)
+      (color-theme-clarity)
+      ))
 
 
 ;;better face colors for my eyes
