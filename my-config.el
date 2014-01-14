@@ -27,8 +27,14 @@
 (setq lpr-switches '("-Php_LaserJet_1320_series__89ACCF_"))
 (global-set-key "\M-p" 'lpr-buffer)
 
+;; Real men end follow periods with one space only.
+(setq sentence-end "[.?!][]\"')}]*\\($\\|[ \t]\\)[ \t\n]*")
+(setq sentence-end-double-space nil)
+
 (require 'smooth-scrolling)
 (setq smooth-scroll-margin 5)
 
-(require 'json-pretty-print)
+;; remap kill region
+(global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-x\C-k" 'kill-region)
 

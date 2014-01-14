@@ -366,4 +366,5 @@ Added: %U")
 
 (require 'git)
 
+(require 'json-pretty-print)
 

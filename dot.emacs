@@ -46,9 +46,6 @@
 (if window-system
     (tool-bar-mode 0))
 
-;; Real men end follow periods with one space only.
-(setq sentence-end "[.?!][]\"')}]*\\($\\|[ \t]\\)[ \t\n]*")
-(setq sentence-end-double-space nil)
 
  (require 'color-theme)
  (eval-after-load "color-theme"
@@ -57,11 +54,12 @@
 ;;      (load-file "~/emacs/themes/color-theme-dark-vee.el")
 ;;      (color-theme-dark-vee)
       (load-file "~/emacs/themes/color-theme-library.el")
-;;      (color-theme-charcoal-black)
+      (color-theme-charcoal-black)
 ;;      (color-theme-tty-dark)
 ;;      (color-theme-hober)
-;;      (color-theme-dark-laptop)
-      (color-theme-clarity)
+;;        (color-theme-dark-laptop)
+;;      (color-theme-aliceblue)
+;;      (color-theme-clarity)
       ))
 
 
