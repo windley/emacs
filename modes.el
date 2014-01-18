@@ -368,3 +368,7 @@ Added: %U")
 
 (require 'json-pretty-print)
 
+(require 'uniquify)
+(setq 
+  uniquify-buffer-name-style 'post-forward
+  uniquify-separator ":")
