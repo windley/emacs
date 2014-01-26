@@ -10,10 +10,6 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-;; smart tabbing
-;(require 'smart-tab) ;;; http://www.emacswiki.org/emacs/TabCompletion#SmartTab
-;(global-smart-tab-mode 1)
-
 (setq text-mode-hook
    '(lambda ()
       (setq word-wrap 1)
@@ -372,3 +368,4 @@ Added: %U")
 (setq 
   uniquify-buffer-name-style 'post-forward
   uniquify-separator ":")
+
