@@ -18,10 +18,10 @@
 (setq abbrev-mode t)
 
 ;;; ispell
-(setq ispell-program-name "ispell") 
+(setq ispell-program-name "aspell") 
 (setq ispell-personal-dictionary "~/lib/ispell/personal-dictionary") 
 (setq ispell-silently-savep t)   
-(setq ispell-dictionary "english")
+(setq ispell-dictionary "en")
 
 ;; (setq lpr-switches '("-PLaser"))
 (setq lpr-switches '("-Php_LaserJet_1320_series__89ACCF_"))
