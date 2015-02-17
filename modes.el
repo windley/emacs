@@ -22,6 +22,12 @@
       )
    )
 
+;; for GNOME
+(if (string= system-type "gnu/linux")
+  (setq x-select-enable-clipboard t)
+  (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+  )
+
 
 ;; (setq ispell-program-name "/opt/local/bin/ispell") ;; has to be set before load.
 ;; (setq ispell-library-directory "/opt/local/lib")
@@ -40,8 +46,6 @@
      (interactive)
      (setq flyspell-sort-corrections nil)
      ))
-
-
 
 (require 'ws-trim)
 
@@ -268,8 +272,8 @@ Added: %U")
 
 (add-hook 'cperl-mode-hook
           '(lambda ()
-             (flyspell-prog-mode t)
-             (add-to-list ‘write-file-functions ‘delete-trailing-whitespace)
+;             (flyspell-prog-mode t)
+;             (add-to-list ‘write-file-functions ‘delete-trailing-whitespace)
             ))
 
 
