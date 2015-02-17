@@ -10,10 +10,6 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-;; smart tabbing
-;(require 'smart-tab) ;;; http://www.emacswiki.org/emacs/TabCompletion#SmartTab
-;(global-smart-tab-mode 1)
-
 (setq text-mode-hook
    '(lambda ()
       (setq word-wrap 1)
@@ -222,7 +218,9 @@ Added: %U")
 
 
 ;;; MaGIT
-(autoload 'wikipedia-mode "magit.elc")
+(autoload 'magic-mode "magit.elc")
+(global-set-key (kbd "C-x g") 'magit-status)
+
 
 ;;; bibtex mode
 (setq bibtex-maintain-sorted-entries t)
@@ -362,6 +360,16 @@ Added: %U")
 
  
 
+
+(electric-pair-mode 1) ;;; auto-insert matching parens
+(show-paren-mode 1) ;;; turn on paren match highlighting
+
 (require 'git)
 
+(require 'json-pretty-print)
+
+(require 'uniquify)
+(setq 
+  uniquify-buffer-name-style 'post-forward
+  uniquify-separator ":")
 

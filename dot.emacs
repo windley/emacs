@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; -*-
 
-(require 'cl)
+(require 'cl-lib)
 
 ;; I keep all my emacs-related stuff under ~/emacs
 (defvar emacs-root "~/" 
@@ -10,7 +10,7 @@
 (add-to-list 'load-path (concat emacs-root "emacs"))
 
 ;; add all the elisp directories under ~/emacs to my load path
-(labels ((add-path (p)
+(cl-labels ((add-path (p)
 		  (add-to-list 'load-path
 			      (concat emacs-root p))))
   (add-path "emacs/speedbar-0.14beta4")
@@ -25,7 +25,7 @@
   (add-path "emacs/org-7.4/lisp")
   (add-path "emacs/git")
   (add-path "emacs/weblogger")
-  (add-path "emacs/google-weather")
+;  (add-path "emacs/google-weather")
 )
 
 (defvar aquamacs-p (string-match "Aquamacs" (version)))
@@ -46,16 +46,21 @@
 (if window-system
     (tool-bar-mode 0))
 
-;; Real men end follow periods with one space only.
-(setq sentence-end "[.?!][]\"')}]*\\($\\|[ \t]\\)[ \t\n]*")
-(setq sentence-end-double-space nil)
 
-(require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (load-file "~/emacs/themes/color-theme-dark-vee.el")
-     (color-theme-dark-vee)))
+ (require 'color-theme)
+ (eval-after-load "color-theme"
+   '(progn
+      (color-theme-initialize)
+;;      (load-file "~/emacs/themes/color-theme-dark-vee.el")
+;;      (color-theme-dark-vee)
+      (load-file "~/emacs/themes/color-theme-library.el")
+      (color-theme-charcoal-black)
+;;      (color-theme-tty-dark)
+;;      (color-theme-hober)
+;;        (color-theme-dark-laptop)
+;;      (color-theme-aliceblue)
+;;      (color-theme-clarity)
+      ))
 
 
 ;;better face colors for my eyes
