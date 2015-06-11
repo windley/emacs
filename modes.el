@@ -369,3 +369,5 @@ Added: %U")
   uniquify-buffer-name-style 'post-forward
   uniquify-separator ":")
 
+(require 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
