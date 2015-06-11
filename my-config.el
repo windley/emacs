@@ -18,7 +18,7 @@
 (setq abbrev-mode t)
 
 ;;; ispell
-(setq ispell-program-name "aspell") 
+;(setq ispell-program-name "aspell") 
 (setq ispell-personal-dictionary "~/lib/ispell/personal-dictionary") 
 (setq ispell-silently-savep t)   
 (setq ispell-dictionary "en")
