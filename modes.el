@@ -19,6 +19,12 @@
    )
 
 
+;;; ispell
+(setq ispell-program-name "/usr/local/bin/aspell") ;; has to be set before 
+(setq ispell-personal-dictionary "~/emacs/personal-dictionary") 
+(setq ispell-silently-savep t)   
+(setq ispell-dictionary "english")
+
 ;; (setq ispell-program-name "/opt/local/bin/ispell") ;; has to be set before load.
 ;; (setq ispell-library-directory "/opt/local/lib")
 ;; (if (file-exists-p "/opt/local/bin/ispell")
@@ -111,7 +117,8 @@ Added: %U")
 
           ("j" "Journal" entry (file ,(concat org-directory "journal.org"))
 ;          "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
-           "** %^{Title} %U  \"Lindon, UT\")
+           "
+** %^{Title} %U  \"Lindon, UT\"
 %?
 ")
           ))
@@ -158,8 +165,6 @@ Added: %U")
                        (?L . ,location)
                        (?l . ,low)
                        (?h . ,high)))))))
-
-
 
 
 (setq org-remember-templates
@@ -339,7 +344,7 @@ Added: %U")
   "run Marked on the current file and revert the buffer"
   (interactive)
   (shell-command
-   (format "open -a /Applications/Marked.app %s"
+   (format "open -a /Applications/Marked\\ 2.app %s"
        (shell-quote-argument (buffer-file-name))))
 )
 (global-set-key "\C-cm" 'markdown-preview-file)

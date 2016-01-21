@@ -4,7 +4,9 @@
 
 ;; I keep all my emacs-related stuff under ~/emacs
 (defvar emacs-root "~/" 
- "My home directory --- the root of my personal emacs load-path.")
+  "My home directory --- the root of my personal emacs load-path.")
+
+(setq exec-path (append "/usr/local/bin" exec-path))
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp")
 (add-to-list 'load-path (concat emacs-root "emacs"))
@@ -30,7 +32,7 @@
 
 (defvar aquamacs-p (string-match "Aquamacs" (version)))
 
-(load-library "modes")                    ;; blogging stuff
+(load-library "modes")                    ;; set up and start various modes
 (load-library "efuncs")                   ;; my functions and keybindings
 (load-library "blogging")                 ;; blogging stuff
 (if aquamacs-p (load-library "aquamacs")) ;; specific to Aquaemacs
@@ -54,8 +56,8 @@
 ;;      (load-file "~/emacs/themes/color-theme-dark-vee.el")
 ;;      (color-theme-dark-vee)
       (load-file "~/emacs/themes/color-theme-library.el")
-      (color-theme-charcoal-black)
-;;      (color-theme-tty-dark)
+;;      (color-theme-charcoal-black)
+      (color-theme-tty-dark)
 ;;      (color-theme-hober)
 ;;        (color-theme-dark-laptop)
 ;;      (color-theme-aliceblue)

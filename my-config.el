@@ -1,4 +1,8 @@
+
+
 ;; my specific flag settings
+
+
 
 (setq bookmark-save-flag 1)
 
@@ -6,22 +10,18 @@
 (transient-mark-mode t)      ; higlight to mark
 (tool-bar-mode nil)          ; Hate, hate, hate this toolbar. remove it
 (server-start)               ; start the server for emacsclient
+(require 'edit-server)       ; for edit in emacs Chrome extension
+(edit-server-start)
 
 (setq display-time-24hr-format t)  ;24h time
 (display-time)     
-(setq visible-bell t)                         ;no more beeps, just screen flash
+(setq visible-bell nil) ;; broken in 24?                         ;no more beeps, just screen flash
 
 
 ;;; abbrev mode
 (setq abbrev-file-name "~/.abbrev_defs")
 (setq dabbrev-case-replace nil)  ; Preserve case when expanding
 (setq abbrev-mode t)
-
-;;; ispell
-(setq ispell-program-name "aspell") 
-(setq ispell-personal-dictionary "~/lib/ispell/personal-dictionary") 
-(setq ispell-silently-savep t)   
-(setq ispell-dictionary "en")
 
 ;; (setq lpr-switches '("-PLaser"))
 (setq lpr-switches '("-Php_LaserJet_1320_series__89ACCF_"))
