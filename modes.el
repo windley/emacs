@@ -18,6 +18,12 @@
       )
    )
 
+;; for GNOME
+(if (string= system-type "gnu/linux")
+  (setq x-select-enable-clipboard t)
+  (setq interprogram-paste-function 'x-selection-value)
+  )
+
 
 ;;; ispell
 (setq ispell-program-name "/usr/local/bin/aspell") ;; has to be set before 
@@ -42,8 +48,6 @@
      (interactive)
      (setq flyspell-sort-corrections nil)
      ))
-
-
 
 (require 'ws-trim)
 
@@ -271,8 +275,8 @@ Added: %U")
 
 (add-hook 'cperl-mode-hook
           '(lambda ()
-             (flyspell-prog-mode t)
-             (add-to-list ‘write-file-functions ‘delete-trailing-whitespace)
+;             (flyspell-prog-mode t)
+;             (add-to-list ‘write-file-functions ‘delete-trailing-whitespace)
             ))
 
 
@@ -374,3 +378,5 @@ Added: %U")
   uniquify-buffer-name-style 'post-forward
   uniquify-separator ":")
 
+(require 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)

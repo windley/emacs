@@ -38,3 +38,5 @@
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 
+;; make undo easier to do
+(global-set-key (kbd "C-z") 'undo)
