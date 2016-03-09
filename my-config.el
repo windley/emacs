@@ -40,3 +40,10 @@
 
 ;; make undo easier to do
 (global-set-key (kbd "C-z") 'undo)
+
+;;; keep up with Dropbox syncs from other machines
+(global-auto-revert-mode 1)
+
+(require 'mouse-copy)
+(global-set-key [C-down-mouse-1] 'mouse-drag-secondary-pasting)
+(global-set-key [C-S-down-mouse-1] 'mouse-drag-secondary-moving)
