@@ -6,9 +6,24 @@
 (setq default-major-mode 'org-mode)
 
 ;;; packages
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list 'package-archives
+	       '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives
+               '("org" . "http://orgmode.org/elpa/") t)
+  (package-initialize)
+  (package-refresh-contents)
+  (package-install 'use-package) ;; Bootstrap `use-package'
+  (package-install 'org) ;; org mode
+  )
+
+
+
+(use-package perl6-mode
+  :ensure t
+  :defer t)
 
 (setq text-mode-hook
    '(lambda ()
@@ -73,7 +88,6 @@
       (flyspell-mode t)))
 
 ;;; org-mode
-(require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
@@ -85,14 +99,10 @@
             (setq truncate-lines nil)
             (flyspell-mode 1)))
 
- (setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
 
 ;(require 'remember)
 ;(org-remember-insinuate)
-
-(require 'google-weather)
-(require 'org-google-weather)
-
 
 (setq org-directory "~/Dropbox/Documents/orgfiles/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
@@ -122,7 +132,7 @@ Added: %U")
           ("j" "Journal" entry (file ,(concat org-directory "journal.org"))
 ;          "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
            "
-** %^{Title} %U  \"Lindon, UT\"
+** %^{Title} %U  Lindon, UT
 %?
 ")
           ))
@@ -175,7 +185,6 @@ Added: %U")
       `(("Journal" ?j "\n* %^{day's theme} %T \n%[~/emacs/templates/dailyreview.txt]%i\n" ,(concat org-directory "journal.org"))
         ("Book" ?b "\n* %^{Book Title} %T :BOOK: \n%[~/emacs/templates/booktemp.txt]%?\n" ,(concat org-directory "book.org"))
         ("Notes" ?n "\n* %^{topic} %T \n%i%?\n" ,(concat org-directory "notes.org"))
-        ("Fax" ?f "\n* From: Phil Windley\n* Date: %T\n* To: %^{addresses} \n%i%?\n" ,(concat org-directory "faxes.org"))
         ))
 
 
