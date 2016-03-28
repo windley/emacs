@@ -17,6 +17,7 @@
   (package-refresh-contents)
   (package-install 'use-package) ;; Bootstrap `use-package'
   (package-install 'org) ;; org mode
+  (package-install 'markdown-mode) ;; markdown mode
   )
 
 
@@ -132,7 +133,7 @@ Added: %U")
           ("j" "Journal" entry (file ,(concat org-directory "journal.org"))
 ;          "** %^{Title} %U  %(journal-google-weather \"Lindon, UT\")
            "
-** %^{Title} %U  Lindon, UT
+** %^{Title} %U  *Lindon, UT*
 %?
 ")
           ))
@@ -350,7 +351,7 @@ Added: %U")
               auto-mode-alist))
 
 ;;; markdown
-(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+;;(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
 
 (defun markdown-preview-file ()
