@@ -80,3 +80,4 @@
 ;;  '(show-paren-mismatch ((t (:bold nil :foreground "white" :background "Red")))))
   
 
+(put 'ido-exit-minibuffer 'disabled nil)
