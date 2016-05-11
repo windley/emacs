@@ -6,7 +6,9 @@
 (defvar emacs-root "~/" 
   "My home directory --- the root of my personal emacs load-path.")
 
-(setq exec-path (append "/usr/local/bin" exec-path))
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "~/bin")
+
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp")
 (add-to-list 'load-path (concat emacs-root "emacs"))

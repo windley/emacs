@@ -20,11 +20,14 @@
   (package-install 'use-package) ;; Bootstrap `use-package'
   (package-install 'org) ;; org mode
   (package-install 'markdown-mode) ;; markdown mode
-  (package-install 'xah-lookup) ;; markdown mode
-  (package-install 'magit) ;; markdown mode
+  (package-install 'xah-lookup) 
+  (package-install 'magit)
+  (package-install 'cider)
+  (package-install 'exec-path-from-shell)
   )
 
-
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 (use-package perl6-mode
   :ensure t
@@ -200,12 +203,14 @@ Added: %U")
 (add-to-list 'auto-mode-alist '("\.inc$" . html-mode))
 (add-to-list 'auto-mode-alist '("\.body$" . html-mode))
 (setq html-mode-hook
-   '(lambda ()
-      (setq word-wrap 1)
-;      (auto-fill-mode 1)
-      (abbrev-mode t)
-      (flyspell-mode t)
-      ))
+      '(lambda ()
+	 (load-library "my-sgml-funcs")
+	 (setq word-wrap 1)
+;         (auto-fill-mode 1)
+	 (abbrev-mode t)
+	 (flyspell-mode t)
+	 (setq sgml-xml-mode t)
+	 ))
 
 ;;; YAML
 (require 'yaml-mode)
