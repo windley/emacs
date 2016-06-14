@@ -7,6 +7,7 @@
   "My home directory --- the root of my personal emacs load-path.")
 
 (add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "/usr/local/sbin")
 (add-to-list 'exec-path "~/bin")
 
 
@@ -51,35 +52,6 @@
     (tool-bar-mode 0))
 
 
- (require 'color-theme)
- (eval-after-load "color-theme"
-   '(progn
-      (color-theme-initialize)
-;;      (load-file "~/emacs/themes/color-theme-dark-vee.el")
-;;      (color-theme-dark-vee)
-      (load-file "~/emacs/themes/color-theme-library.el")
-;;      (color-theme-charcoal-black)
-      (color-theme-tty-dark)
-;;      (color-theme-hober)
-;;        (color-theme-dark-laptop)
-;;      (color-theme-aliceblue)
-;;      (color-theme-clarity)
-      ))
-
-
-;;better face colors for my eyes
-;; (custom-set-faces
-;;   ;; custom-set-faces was added by Custom.
-;;   ;; If you edit it by hand, you could mess it up, so be careful.
-;;   ;; Your init file should contain only one such instance.
-;;   ;; If there is more than one, they won't work right.
-;;  '(default ((t (:stipple nil :background "black" :foreground "sky blue" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 130 :width normal :family "adobe-courier"))))
-;;  '(font-lock-comment-face ((((class color) (background dark)) (:foreground "slate blue"))))
-;;  '(paren-face-match ((((class color)) (:foreground "turquoise"))))
-;;  '(paren-face-match-light ((((class color)) (:foreground "pale turquoise"))))
-;;  '(region ((t (:background "#ffff99" :foreground "black"))))
-;;  '(show-paren-match ((t (:bold nil :foreground "white" :background "steel blue"))))
-;;  '(show-paren-mismatch ((t (:bold nil :foreground "white" :background "Red")))))
-  
+(load-theme 'deeper-blue t)
 
 (put 'ido-exit-minibuffer 'disabled nil)

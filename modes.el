@@ -24,6 +24,7 @@
   (package-install 'magit)
   (package-install 'cider)
   (package-install 'exec-path-from-shell)
+  (package-install 'ensime) ;; scala
   )
 
 (when (memq window-system '(mac ns))
@@ -400,3 +401,6 @@ Added: %U")
 
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;(require 'ensime)
+;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)

@@ -1,1 +1,0 @@
-themes/color-theme-example.el
