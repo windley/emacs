@@ -67,12 +67,23 @@
     ("\\(#\\){[^}]*}" . (0 font-lock-constant-face t))
 ))
 
+(defvar krl-mode-map
+  (let ((map (make-keymap))
+	)
+	(define-key map "\C-c\C-s" 'ruleset-skeleton)
+	(define-key map "\C-c\C-r" 'rule-skeleton)
+	(define-key map [remap comment-dwim] 'krl-comment-dwim)
+	map
+	)
+  "Keymap for KRL mode"
+  )
+
 ;; define the mode
 (define-derived-mode krl-mode fundamental-mode
   "KRL Mode"
   "Major mode for editing KRL (Kynetx Rule Language)..."
   ;; modify the keymap
-  (define-key krl-mode-map [remap comment-dwim] 'krl-comment-dwim)
+  (use-local-map krl-mode-map)
 
   ;; code for syntax highlighting
   (make-local-variable 'font-lock-defaults)
@@ -85,8 +96,41 @@
   (modify-syntax-entry ?\n "> b" krl-mode-syntax-table)
 
 
-  ;; ...
-)
+  )
 
+
+
+
+(define-skeleton ruleset-skeleton
+  "inserts a KRL ruleset skeleton into the current buffer"
+  nil
+  '(setq v1 nil
+	 v2 nil
+	 v3 nil)
+
+  "ruleset " (or v1 (setq v1 (skeleton-read "Ruleset name: "))) " {" \n
+  "  meta {\n" 
+  "    name \"" v1 "\"\n" 
+  "    description <<\n" (or v2 (setq v2 (skeleton-read "Ruleset description: "))) "\n>>\n" 
+  "    author \"" (or v3 (setq v3 (skeleton-read "Author: "))) "\"\n\n" 
+  "    // use module v1_wrangler alias wrangler\n" 
+  "    sharing off\n\n" 
+  "    // provides \n"  
+  "  }\n\n" 
+  "  global {" \n "    " _ \n \n "  }" \n \n
+  "}"
+  )
+
+
+(define-skeleton rule-skeleton
+  "inserts a KRL rule skeleton into the current buffer"
+  nil
+  '(setq v1 nil
+	 v2 nil
+	 v3 nil)
+  "  rule " (or v1 (setq v1 (skeleton-read "Rule name: "))) " {" \n
+  "    select when " _ "\n"
+  "  }"
+)
 
 
