@@ -1,4 +1,4 @@
-personal_ws-1.1 en 112 
+personal_ws-1.1 en 116 
 api
 vehicleSummary
 resynchronized
@@ -8,6 +8,7 @@ cid
 noop
 convertToUTC
 ignitionStatus
+Searls
 pragma
 verifiers
 activeVehicleSummary
@@ -42,6 +43,7 @@ eventChannel
 TIMESTAMP
 backChannel
 idempotence
+foundational
 attr
 neq
 rulesets
@@ -101,13 +103,15 @@ currentSession
 Sams's
 betweeness
 Namecoin
+efficiencies
 webhook
 addr
+Interoperability
 ruleset
 deregisters
 OAuth
 RESTful
 pre
-picos
 pico's
+picos
 JSON
